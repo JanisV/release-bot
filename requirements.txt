@@ -7,5 +7,5 @@ SQLAlchemy~=2.0.36
 python-telegram-bot~=21.7
 PyGithub~=2.5.0
 requirements-parser~=0.11.0
-telegramify_markdown~=0.1.15
+telegramify_markdown~=0.4.2
 urllib3~=2.2.3
