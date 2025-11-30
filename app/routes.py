@@ -4,14 +4,15 @@ from flask import Response, request
 
 from app import telegram_bot, app
 from app.models import Chat, Repo, Release
+from app._version import __version__
 
 
 @app.route('/')
 async def index():
     bot_me = await telegram_bot.get_me()
-    return (f'<a href="https://t.me/{bot_me.username}">{bot_me.first_name}</a> - a telegram bot for GitHub releases.'
+    return (f'<a href="https://t.me/{bot_me.username}">{bot_me.first_name}</a> - a telegram bot for GitHub releases v{__version__}.'
             '<br><br>'
-            'Source code available at <a href="https://github.com/JanisV/release-bot">release-bot</a>')
+            'Source code available at <a href="https://github.com/JanisV/release-bot">JanisV/release-bot</a>')
 
 
 @app.route('/stats')
