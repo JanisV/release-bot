@@ -39,7 +39,7 @@ def poll_github():
                 db.session.commit()
                 continue
             except github.GithubException as e:
-                if e.status == 451:
+                if e.status in (403, 451):
                     message = f"GitHub repo {repo_obj.full_name} has been blocked"
                     for chat in repo_obj.chats:
                         try:
