@@ -157,7 +157,12 @@ class TelegramBot(object):
                 text = "Your subscriptions:\n"
                 chat = get_or_create_chat(db.session, chat_id)
                 for i, repo in enumerate(chat.repos):
-                    text += f"{i + 1}. <b><a href='{repo.link}'>{repo.full_name}</a></b>\n"
+                    repo_emoji = ''
+                    if repo.archived:
+                        repo_emoji += ' 📦'
+                    if repo.blocked:
+                        repo_emoji += ' 🚫'
+                    text += f"{i + 1}. <b><a href='{repo.link}'>{repo.full_name}</a></b>{repo_emoji}\n"
 
             await update.message.reply_html(
                 text,
