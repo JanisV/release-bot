@@ -23,6 +23,7 @@ class Repo(db.Model):
     description = db.Column(db.String)
     link = db.Column(db.String)
     archived = db.Column(db.Boolean)
+    blocked = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, default=aware_utcnow)
 
     chats = db.relationship('Chat', secondary='chat_repo', back_populates='repos')

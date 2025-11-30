@@ -17,6 +17,10 @@ from app.repo_engine import store_latest_release, format_release_message
 def poll_github():
     with scheduler.app.app_context():
         for repo_obj in models.Repo.query.all():
+            # TODO: Filter blocked repos from SQL query
+            if repo_obj.blocked:
+                continue
+
             try:
                 scheduler.app.logger.info(f"Poll GitHub repo {repo_obj.full_name}")
                 repo = github_obj.get_repo(repo_obj.id)
@@ -35,7 +39,21 @@ def poll_github():
                 db.session.commit()
                 continue
             except github.GithubException as e:
-                scheduler.app.logger.error(f"GithubException for {repo_obj.full_name} in poll_github: {e}")
+                if e.status == 451:
+                    message = f"GitHub repo {repo_obj.full_name} has been blocked"
+                    for chat in repo_obj.chats:
+                        try:
+                            asyncio.run(telegram_bot.send_message(chat_id=chat.id,
+                                                                  text=message,
+                                                                  disable_web_page_preview=True))
+                        except telegram.error.Forbidden as e:
+                            pass
+
+                    scheduler.app.logger.info(message)
+                    repo_obj.blocked = True
+                    db.session.commit()
+                else:
+                    scheduler.app.logger.error(f"GithubException for {repo_obj.full_name} in poll_github: {e}")
                 continue
 
             if repo.archived and not repo_obj.archived:
