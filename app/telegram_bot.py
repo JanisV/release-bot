@@ -607,6 +607,7 @@ class TelegramBot(object):
                 repo = github_obj.get_repo(repo_name)
             except github.GithubException as e:
                 await update.message.reply_text("Sorry, I can't find that repo.")
+                print(f"GithubException for {repo_name} in message: {e}")
                 return
 
             await self.add_repo(chat_id, repo, update.get_bot(), False)
