@@ -52,7 +52,7 @@ def format_release_message(chat, repo, release):
                    f"{" <i>updated</i>" if release.updated else ""}\n"
                    f"<pre>{release_body}</pre>")
     else:
-        message = markdownify(f"*{repo.full_name}*\n"
+        message = markdownify(f"**{repo.full_name}**\n"
                               f"{f"`{release_title}`" if release_title else ""}"
                               f" [{current_tag}]({release.html_url})"
                               f"{" _pre-release_" if release.prerelease else ""}"
@@ -60,7 +60,7 @@ def format_release_message(chat, repo, release):
                               f"{release_body}")
         while len(message) >= MessageLimit.MAX_TEXT_LENGTH:
             release_body = release_body[:len(release_body)-100] + "\n-=SKIPPED=-"
-            message = markdownify(f"*{repo.full_name}*\n"
+            message = markdownify(f"**{repo.full_name}**\n"
                                   f"{f"`{release_title}`" if release_title else ""}"
                                   f" [{current_tag}]({release.html_url})"
                                   f"{" _pre-release_" if release.prerelease else ""}"
