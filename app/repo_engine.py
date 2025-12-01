@@ -25,6 +25,7 @@ def format_release_message(chat, repo, release):
         "🖼️\\1",
         release_body
     )
+    release_body = release_body.replace("@", "\\@")
     if len(release_body) > MessageLimit.MAX_TEXT_LENGTH - 256:
         release_body = f"{release_body[:MessageLimit.MAX_TEXT_LENGTH - 256]}\n-=SKIPPED=-"
 
