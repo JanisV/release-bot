@@ -25,7 +25,7 @@ from telegram.ext import (
 from app import github_obj, db
 from app._version import __version__
 from app.models import Chat, Repo, ChatRepo, Release
-from app.repo_engine import store_latest_release
+from app.repo_engine import store_latest_release, format_release_message
 
 MAX_UPLOADED_FILE_SIZE = 1024 * 10  # 10kB
 
@@ -89,6 +89,7 @@ class TelegramBot(object):
         self.application.add_handler(CommandHandler("starred", self.starred_command))
         self.application.add_handler(CommandHandler("settings", self.settings_command))
         self.application.add_handler(CommandHandler("stats", self.stats_command))
+        self.application.add_handler(CommandHandler("test", self.test_command))
         self.application.add_handler(MessageHandler(filters.COMMAND, self.unknown_command))
         self.application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.message))
         self.application.add_handler(MessageHandler(filters.Document.ALL, self.download_file))
@@ -517,6 +518,36 @@ class TelegramBot(object):
                         f"subscriptions added by {user_count} users.")
 
             await update.message.reply_text(text)
+
+    async def test_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        """Send a message when the command /test is issued."""
+        if chat_id := self._get_chat_id(update):
+            with (self.app.app_context()):
+                chat = get_or_create_chat(db.session, chat_id)
+
+            if not context.args or len(context.args) > 1:
+                await update.message.reply_text("Specify a GitHub release URL")
+                return
+
+            github_release_url = context.args[0]
+            path_parts = urllib.parse.urlparse(github_release_url).path.strip('/').split('/')
+            repo = github_obj.get_repo(f"{path_parts[0]}/{path_parts[1]}")
+            release = repo.get_release(path_parts[4])
+            release.updated = False
+
+            message = format_release_message(chat, repo, release)
+
+            if chat.release_note_format in ("quote", "pre"):
+                parse_mode = ParseMode.HTML
+            else:
+                parse_mode = ParseMode.MARKDOWN_V2
+
+            await update.message.get_bot().send_message(chat_id, message,
+                                                          parse_mode=parse_mode,
+                                                          link_preview_options=LinkPreviewOptions(
+                                                              url=repo.html_url,
+                                                              prefer_small_media=True)
+                                                          )
 
     def _pypi2github(self, project_name):
         resp = urllib3.request("GET", f"https://pypi.org/pypi/{project_name}/json")
