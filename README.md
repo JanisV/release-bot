@@ -41,6 +41,7 @@ Other similar tools:
 `/starred` - unsubscribe from user's starred repos  
 `/settings` - change output format  
 `/stats` - basic server statistics
+`/test URL` - show specified release message
 
 ## Stack
 
