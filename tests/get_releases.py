@@ -54,7 +54,7 @@ def get_release(github_obj, url):
         if release.tag_name == tag_name:
             with open(f"{owner}__{repo_name}__{tag_name}.md", 'w', encoding='utf-8', newline='') as file:
                 file.write(release.body.replace('\r', ''))
-                return release.body
+                return release.body.replace('\r', '')
 
     return None
 
@@ -80,18 +80,31 @@ def format_message(url, release_body=None):
 
 
 release_urls = (
+    "https://github.com/PyGithub/PyGithub/releases/tag/v2.8.1",
+    "https://github.com/Rongronggg9/RSS-to-Telegram-Bot/releases/tag/v2.10.0",
+    "https://github.com/SiliconLabs/gecko_sdk/releases/tag/v4.4.5",
+    "https://github.com/WinMerge/winmerge/releases/tag/v2.16.50",
+    "https://github.com/fail2ban/fail2ban/releases/tag/1.1.0",
+    "https://github.com/healthchecks/healthchecks/releases/tag/v3.13",
     "https://github.com/immich-app/immich/releases/tag/v1.118.0",
     "https://github.com/immich-app/immich/releases/tag/v1.135.2",
     "https://github.com/immich-app/immich/releases/tag/v1.136.0",
+    "https://github.com/jeffvli/feishin/releases/tag/v0.22.0",
     "https://github.com/karakeep-app/karakeep/releases/tag/v0.18.0",
     "https://github.com/karakeep-app/karakeep/releases/tag/v0.29.0",
+    "https://github.com/linuxserver/docker-cops/releases/tag/3.8.2-ls279",
     "https://github.com/linuxserver/docker-jackett/releases/tag/v0.22.772-ls557",
     "https://github.com/linuxserver/docker-mastodon/releases/tag/v4.3.0-ls108",
+    "https://github.com/linuxserver/docker-mastodon/releases/tag/v4.5.2-ls171",
+    "https://github.com/linuxserver/docker-sabnzbd/releases/tag/4.5.5-ls238",
+    "https://github.com/louislam/dockge/releases/tag/1.5.0",
+    "https://github.com/miguelgrinberg/Flask-Migrate/releases/tag/v4.1.0",
+    "https://github.com/nextcloud/all-in-one/releases/tag/v12.1.4",
     "https://github.com/numpy/numpy/releases/tag/v2.3.2",
     "https://github.com/python-telegram-bot/python-telegram-bot/releases/tag/v22.3",
+    "https://github.com/stashapp/stash/releases/tag/v0.29.3",
+    "https://github.com/swingmx/swingmusic/releases/tag/v2.1.0",
     "https://github.com/urllib3/urllib3/releases/tag/2.5.0",
-    "https://github.com/SiliconLabs/gecko_sdk/releases/tag/v4.4.5",
-    "https://github.com/WinMerge/winmerge/releases/tag/v2.16.50",
 )
 
 
@@ -104,9 +117,9 @@ else:
 github_obj = Github(auth=auth)
 
 for release_url in release_urls:
-#    release_body = get_release(github_obj, release_url)
+    release_body = get_release(github_obj, release_url)
     release_body = None
-#    message = format_message(release_url, release_body)
+    message = format_message(release_url, release_body)
 
 for release_url in release_urls:
     owner, repo_name, tag_name = split_release_url(release_url)
@@ -126,7 +139,7 @@ for release_url in release_urls:
 
     message = format_release_message(chat, repo, release)
 
-    diffs = difflib.unified_diff(formatted_release_body.splitlines(), message.splitlines(), fromfile=release_url, tofile='file2')
+    diffs = difflib.unified_diff(formatted_release_body.splitlines(), message.splitlines(),
+                                 fromfile=f"{owner}__{repo_name}__{tag_name}.tg", tofile=release_url)
     for line in diffs:
         print(line)
-    break
