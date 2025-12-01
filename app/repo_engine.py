@@ -22,7 +22,7 @@ def format_release_message(chat, repo, release):
         release_body
     )
     release_body = github_img_html_tag_pattern.sub(
-        "\\1",
+        "🖼️\\1",
         release_body
     )
     if len(release_body) > MessageLimit.MAX_TEXT_LENGTH - 256:
