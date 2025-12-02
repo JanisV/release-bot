@@ -1,7 +1,7 @@
 *sqlitebrowser/sqlitebrowser*
 [v3\.13\.1]()
 
-**>\[\!NOTE\]
+**>*ⓘ Note*
 >A problem has been reported where the AppImage cannot be run on some previous OS versions,
 >leading to the release of version v2 specifically for the AppImage binary\. Further information: \#3781, https://github\.com/sqlitebrowser/sqlitebrowser/discussions/3775\#discussioncomment\-10969170||
 

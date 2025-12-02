@@ -46,7 +46,7 @@ For more information, view the complete release notes and scroll down to the upg
 
 To get the code for v4\.5\.2, use `git fetch && git checkout v4\.5\.2`\.
 
-**>\[\!NOTE\]
+**>*ⓘ Note*
 >As always, make sure you have backups of the database before performing any upgrades\. If you are using docker\-compose, this is how a backup command might look: `docker exec mastodon\_db\_1 pg\_dump \-Fc \-U postgres postgres \> name\_of\_the\_backup\.dump`||
 
 *📚 Dependencies*
@@ -70,7 +70,7 @@ If you are upgrading directly from an earlier release, please carefully read the
 
 *📚 Non\-Docker*
 
-**>\[\!TIP\]
+**>*💡 Tip*
 >The `charlock\_holmes` gem may fail to build on some systems with recent versions of gcc\.
 >If you run into this issue, try `BUNDLE\_BUILD\_\_CHARLOCK\_HOLMES\="\-\-with\-cxxflags\=\-std\=c\+\+17" bundle install`\.||
 

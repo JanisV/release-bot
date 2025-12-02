@@ -6,7 +6,7 @@
 
 This release fixes a critical security vulnerability that allowed an authenticated user to download an arbitrary file from the host server via the streaming endpoint\. Fix commit: https://github\.com/swingmx/swingmusic/commit/d7e2710d4a726491a43b2c86b9cc042990d2d80e
 
->\[\!IMPORTANT\]
+>*❗ Important*
 >If you are running an older release, please upgrade to this release; especially if your server is exposed to the internet\.
 
 Special thanks to @443pablo for the security report ❤️\.

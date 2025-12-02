@@ -5,7 +5,7 @@
 
 Welcome to release `v1\.118\.0` of Immich\. This version comes with several breaking changes, and also improvements to the mobile app UI and UX, a new documentation home page, as well as bug fixes and enhancements across the app\. We hope you enjoy this release\!
 
->\[\!WARNING\]
+>*⚠️ Warning*
 >*✏ Breaking changes*
 >This release includes the following breaking changes:
 >1\. Port alignment
@@ -31,7 +31,7 @@ The following endpoints were previously deprecated and have been removed, if you
 ⦁ `/api/server\-info/\*` has been removed\. Use `/api/server/\*` instead\.
 ⦁ `/api/people/:id/assets` has been removed\. Use `/api/search/metadata` instead\.
 
->\[\!NOTE\] 
+>*ⓘ Note* 
 >This includes `/api/server\-info/ping`, `/api/server\-info/version`, `/api/server\-features`, `/api/server\-info/config`, `/api/server\-info/statistics`, and others\.
 
 *📚 3\. Remove deprecated `start\.sh` arguments*
@@ -41,7 +41,7 @@ The following docker commands have been removed:
 
 Follow the steps below to align `docker\-compose\.yml` with the default setup\.
 
-**>\[\!NOTE\] 
+**>*ⓘ Note* 
 >These steps are only required if you still have the `immich\-microservices` section in your `docker\-compose\.yml` or didn't follow the previous instructions to remove the command section\. If you don't have the mentioned content below, you can ignore this||
 
 

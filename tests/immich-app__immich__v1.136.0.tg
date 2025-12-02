@@ -3,7 +3,7 @@
 
 *📌 v1\.136\.0 \- 69420 stars release*
 
-**>\[\!CAUTION\]
+**>*🛑 Caution*
 >*📌 BREAKING CHANGES*
 >
 >*✏ IMMICH\_MEDIA\_LOCATION \(\#19995\)*
@@ -77,7 +77,7 @@ Welcome to release `v1\.136\.0`\. This midsummer release is the culmination of t
 
 *✏ Beta timeline, sync, and upload mechanism*
 
->\[\!NOTE\]
+>*ⓘ Note*
 >This is only supported when both the server and the mobile app are updated to `v1\.136\.0`
 
 This is a series of work that has been happening for months under the hood, from the changes in the database query engine, server’s queries, and support logic, to integrating a whole new database on the mobile app, and rewriting almost all aspects of the mobile app, you can now try the new timeline with data sync mechanism, and upload rework by go to the `App Settings \> Toggle the Beta timeline button`\. After toggling, you will be direc
