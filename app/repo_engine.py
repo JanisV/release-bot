@@ -8,11 +8,16 @@ from telegramify_markdown import markdownify
 from app import app
 from app.models import Release, Repo
 
-github_extra_html_tags_pattern = re.compile("<p align=\".*?\".*?>|</p>|<a name=\".*?\">|</a>|<picture>.*?</picture>|"
-                                            "</?h[1-4]>|</?sub>|</?sup>|</?details>|</?summary>|</?b>|</?dl>|</?dt>|"
+github_extra_html_tags_pattern = re.compile("<p align=\".*?\".*?>|</p>|<a name=\".*?\">|<picture>.*?</picture>|"
+                                            "</?h[1-4]>|</?sub>|</?sup>|</?details>|</?summary>|</?dl>|</?dt>|"
                                             "</?dd>|</?em>|</?small>|<br>|<!--.*?-->|<p/>",
                                             flags=re.DOTALL)
 github_img_html_tag_pattern = re.compile("<img .*?src=\"(.*?)\".*?>")
+github_extra_extra_html_tags_pattern = re.compile("</?b>|</?i>|</?code>|</a>")
+github_b_html_tag_pattern = re.compile("<b>(.*?)</b>", flags=re.DOTALL)
+github_i_html_tag_pattern = re.compile("<i>(.*?)</i>", flags=re.DOTALL)
+github_code_html_tag_pattern = re.compile("<code>(.*?)</code>", flags=re.DOTALL)
+github_a_html_tag_pattern = re.compile("<a href=\"(.*?)\".*?>(.*?)</a>", flags=re.DOTALL)
 
 
 def format_release_message(chat, repo, release):
@@ -38,6 +43,10 @@ def format_release_message(chat, repo, release):
         release_title = release.title
 
     if chat.release_note_format == "quote":
+        release_body = github_extra_extra_html_tags_pattern.sub(
+            "",
+            release_body
+        )
         message = (f"<b>{repo.full_name}</b>\n"
                    f"{f"<code>{release_title}</code>" if release_title else ""}"
                    f" <a href='{release.html_url}'>{current_tag}</a>"
@@ -45,6 +54,10 @@ def format_release_message(chat, repo, release):
                    f"{" <i>updated</i>" if release.updated else ""}\n"
                    f"<blockquote>{release_body}</blockquote>")
     elif chat.release_note_format == "pre":
+        release_body = github_extra_extra_html_tags_pattern.sub(
+            "",
+            release_body
+        )
         message = (f"<b>{repo.full_name}</b>\n"
                    f"{f"<code>{release_title}</code>" if release_title else ""}"
                    f" <a href='{release.html_url}'>{current_tag}</a>"
@@ -52,6 +65,18 @@ def format_release_message(chat, repo, release):
                    f"{" <i>updated</i>" if release.updated else ""}\n"
                    f"<pre>{release_body}</pre>")
     else:
+        release_body = github_b_html_tag_pattern.sub(
+            "**\\1**", release_body
+        )
+        release_body = github_i_html_tag_pattern.sub(
+            "_\\1_", release_body
+        )
+        release_body = github_code_html_tag_pattern.sub(
+            "`\\1`", release_body
+        )
+        release_body = github_a_html_tag_pattern.sub(
+            "[\\2](\\1)", release_body
+        )
         message = markdownify(f"**{repo.full_name}**\n"
                               f"{f"`{release_title}`" if release_title else ""}"
                               f" [{current_tag}]({release.html_url})"
