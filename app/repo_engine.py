@@ -18,7 +18,6 @@ github_b_html_tag_pattern = re.compile("<b>(.*?)</b>", flags=re.DOTALL)
 github_i_html_tag_pattern = re.compile("<i>(.*?)</i>", flags=re.DOTALL)
 github_code_html_tag_pattern = re.compile("<code>(.*?)</code>", flags=re.DOTALL)
 github_a_html_tag_pattern = re.compile("<a href=\"(.*?)\".*?>(.*?)</a>", flags=re.DOTALL)
-github_hr_html_tag_pattern = re.compile("<hr>")
 
 
 def format_release_message(chat, repo, release):
@@ -78,10 +77,12 @@ def format_release_message(chat, repo, release):
         release_body = github_a_html_tag_pattern.sub(
             "[\\2](\\1)", release_body
         )
-        release_body = github_hr_html_tag_pattern.sub(
-            "---",
-            release_body
-        )
+        release_body = release_body.replace("<hr>", "---")
+        release_body = release_body.replace("[!NOTE]", "**ⓘ Note**")
+        release_body = release_body.replace("[!TIP]", "**💡 Tip**")
+        release_body = release_body.replace("[!IMPORTANT]", "**❗ Important**")
+        release_body = release_body.replace("[!WARNING]", "**⚠️ Warning**")
+        release_body = release_body.replace("[!CAUTION]", "**🛑 Caution**")
         message = markdownify(f"**{repo.full_name}**\n"
                               f"{f"`{release_title}`" if release_title else ""}"
                               f" [{current_tag}]({release.html_url})"
