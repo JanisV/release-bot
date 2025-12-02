@@ -7,7 +7,7 @@ Welcome to the 0\.29\.0 release of Karakeep\! This release ships some of our mos
 
 >If you enjoy using Karakeep, consider supporting the project [here ☕️](https://buymeacoffee\.com/mbassem) or via GitHub [here](https://github\.com/sponsors/MohamedBassem)\.
 
-<a href\="https://www\.buymeacoffee\.com/mbassem" target\="\_blank"\>🖼️https://cdn\.buymeacoffee\.com/buttons/v2/default\-yellow\.png
+[🖼️https://cdn\.buymeacoffee\.com/buttons/v2/default\-yellow\.png](https://www\.buymeacoffee\.com/mbassem)
 
 And in case you missed it, we now have a ☁️ managed offering ☁️ for those who don't want to self\-host\. ~We're still in private beta \(you can signup for access [here](https://tally\.so/r/wo8zzx)\) and gradually letting more and more users in\.~ We're in public beta now and you can signup [here](https://cloud\.karakeep\.app) 🎉\.
 
@@ -71,5 +71,5 @@ To upgrade:
 
 ⦁ i18n: fix en\_US translation \- @MohamedBassem in f01d96fd
 ⦁ i18n: Sync weblate translations \- @Hosted Weblate in e1ad2cfd
-⦁ feat: autocomplete search terms \(\#2178\) \- @MohamedBassem
+⦁ feat: autocomplete search terms \(\#2178\) \- @MohamedBa
   \-\=SKIPPED\=\-

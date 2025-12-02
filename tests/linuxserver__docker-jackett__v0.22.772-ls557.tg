@@ -20,7 +20,7 @@ Rebase to Alpine 3\.20\.
 ⦁ 3ec68aa0bf4d8a267234d032607ff025e9e0b756 Revert "losslessclub: use login form\. \#15626"
 ⦁ bc6914b44b284ab285c603772150106e68f39c94 Revert "losslessclub: switch to cookie login\. \#15626"
 ⦁ 6c768e85e1dfa09b168b4f7ffc000b3108b3432c tjupd: update download selector
-  See More
+  *See More*
 
 ⦁ dbd28429a6e448410b44af88ac27ea376c9c7586 rudub: bump domain
 ⦁ 6442b1e0e3a5c449c578186a5d1ba9ab8dfe88c4 assorted nexus: bump engine tag
