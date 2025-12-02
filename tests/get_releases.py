@@ -50,11 +50,10 @@ def get_release(github_obj, url):
 
     repo = github_obj.get_repo(full_name)
 
-    for release in repo.get_releases():
-        if release.tag_name == tag_name:
-            with open(f"{owner}__{repo_name}__{tag_name}.md", 'w', encoding='utf-8', newline='') as file:
-                file.write(release.body.replace('\r', ''))
-                return release.body.replace('\r', '')
+    release = repo.get_release(tag_name)
+    with open(f"{owner}__{repo_name}__{tag_name}.md", 'w', encoding='utf-8', newline='') as file:
+        file.write(release.body.replace('\r', ''))
+        return release.body.replace('\r', '')
 
     return None
 
@@ -118,7 +117,7 @@ github_obj = Github(auth=auth)
 
 for release_url in release_urls:
     release_body = get_release(github_obj, release_url)
-    release_body = None
+    # release_body = None
     message = format_message(release_url, release_body)
 
 for release_url in release_urls:

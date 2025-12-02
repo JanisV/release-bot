@@ -8,7 +8,7 @@ This release addresses the following issues\.
 ⦁ Fixed an issue where the database migration was not running correctly on some systems
 ⦁ Fixed an issue where the timezone causes an issue showing the web timeline in some instances, the counter resets again\!
 
-https://github\.com/user\-attachments/assets/5f274acc\-8d1c\-49e3\-b25c\-1fdfca793d5a
+🖼️https://github\.com/user\-attachments/assets/5f274acc\-8d1c\-49e3\-b25c\-1fdfca793d5a
 <p/\>
 \- Reverted the behavior of sorting people, it is now based on asset count as before
 

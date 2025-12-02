@@ -7,7 +7,7 @@ Welcome to the 0\.29\.0 release of Karakeep\! This release ships some of our mos
 
 >If you enjoy using Karakeep, consider supporting the project [here ☕️](https://buymeacoffee\.com/mbassem) or via GitHub [here](https://github\.com/sponsors/MohamedBassem)\.
 
-<a href\="https://www\.buymeacoffee\.com/mbassem" target\="\_blank"\>https://cdn\.buymeacoffee\.com/buttons/v2/default\-yellow\.png
+<a href\="https://www\.buymeacoffee\.com/mbassem" target\="\_blank"\>🖼️https://cdn\.buymeacoffee\.com/buttons/v2/default\-yellow\.png
 
 And in case you missed it, we now have a ☁️ managed offering ☁️ for those who don't want to self\-host\. ~We're still in private beta \(you can signup for access [here](https://tally\.so/r/wo8zzx)\) and gradually letting more and more users in\.~ We're in public beta now and you can signup [here](https://cloud\.karakeep\.app) 🎉\.
 
@@ -49,17 +49,17 @@ And in case you missed it, we now have a ☁️ managed offering ☁️ for thos
 
 *✏ Collaborative Lists*
 
-https://github\.com/user\-attachments/assets/f19f9951\-c460\-413c\-9757\-6014a7ec4f7e
+🖼️https://github\.com/user\-attachments/assets/f19f9951\-c460\-413c\-9757\-6014a7ec4f7e
 
 
 *✏ Automated Backups*
 
-https://github\.com/user\-attachments/assets/65dc7e0e\-3ab3\-4243\-b451\-5ef3a3e7130b
+🖼️https://github\.com/user\-attachments/assets/65dc7e0e\-3ab3\-4243\-b451\-5ef3a3e7130b
 
 
 *✏ Search Autocomplete*
 
-https://github\.com/user\-attachments/assets/ed2f7a61\-835f\-4ee6\-8940\-657110932526
+🖼️https://github\.com/user\-attachments/assets/ed2f7a61\-835f\-4ee6\-8940\-657110932526
 
 *📌 Upgrading 📦*
 
@@ -71,5 +71,5 @@ To upgrade:
 
 ⦁ i18n: fix en\_US translation \- @MohamedBassem in f01d96fd
 ⦁ i18n: Sync weblate translations \- @Hosted Weblate in e1ad2cfd
-⦁ feat: autocomplete search terms \(\#2178\) \- @MohamedBassem in ebaf
+⦁ feat: autocomplete search terms \(\#2178\) \- @Mohame
   \-\=SKIPPED\=\-

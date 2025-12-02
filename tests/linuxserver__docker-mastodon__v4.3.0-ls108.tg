@@ -53,5 +53,5 @@ The following changelog entries focus on changes visible to users, administrator
   ⦁ `GET /api/v2/notifications`: https://docs\.joinmastodon\.org/methods/grouped\_notifications/\#get\-grouped
   ⦁ `GET /api/v2/notifications/:group\_key`: https://docs\.joinmastodon\.org/methods/grouped\_notifications/\#get\-notification\-group
   ⦁ `GET /api/v2/notifications/:group\_key/accounts`: https://docs\.joinmastodon\.org/methods/grouped\_notifications/\#get\-group\-accounts
-  ⦁ `POST /api/v2/notifications/:group\_key/dimsiss`: https://docs\.joinmastodon\.org/meth
+  ⦁ `POST /api/v2/notifications/:group\_key/dimsiss`: https://docs\.joinmastodon\.
     \-\=SKIPPED\=\-

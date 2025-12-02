@@ -1,0 +1,92 @@
+*linuxserver/docker\-sabnzbd*
+[4\.5\.5\-ls238]()
+
+*CI Report:*
+
+https://ci\-tests\.linuxserver\.io/linuxserver/sabnzbd/4\.5\.5\-ls238/index\.html
+
+*LinuxServer Changes:*
+
+*Full Changelog*: https://github\.com/linuxserver/docker\-sabnzbd/compare/4\.5\.5\-ls237\.\.\.4\.5\.5\-ls238
+
+*Remote Changes:*
+
+Release Notes \- SABnzbd 4\.5\.5
+───────────────────
+
+*✏ Bug fixes and changes in 4\.5\.5*
+
+⦁ macOS: Failed to start on versions of macOS older than 11\.
+  Python 3\.14 dropped support for macOS 10\.13 and 10\.14\.
+  Because of that macOS 10\.15 is required to run 4\.5\.5\.
+
+*✏ Bug fixes and changes in 4\.5\.4*
+
+*📚 New Features*
+⦁ History details now includes option to mark job as `Completed`\.
+⦁ `Quota` notifications available for all notification services\.
+  ⦁ Sends alerts at 75%, 90%, and 100% quota usage\.
+⦁ Multi\-Operations now supports Move to Top/Bottom\.
+⦁ New `outgoing\_nntp\_ip` option to bind outgoing NNTP connections to specific IP address\.
+
+*📚 Improvements*
+⦁ Setup wizard now requires successful Server Test before proceeding\.
+⦁ Anime episode notation `S04 \- 10` now supported for Sorting and Duplicate Detection\.
+⦁ Multi\-Operations: Play/Resume button unselects on second click for better usability\.
+⦁ Unrar now handles renaming of invalid characters on Windows filesystem\.
+⦁ Switched from vendored `sabnzbd\.rarfile` module to `rarfile\>\=4\.2`\.
+⦁ Warning displayed when removing all Orphaned jobs \(clears Temporary Download folder\)\.
+
+*📚 Bug Fixes*
+⦁ Active connections counter in Status window now updates correctly\.
+⦁ Job setting changes during URL\-grabbing no longer ignored\.
+⦁ Incomplete `\.par2` file parsing no longer leaves files behind\.
+⦁ `Local IPv4 address` now detectable when using Socks5 proxy\.
+⦁ Server configuration changes no longer show `Failure` message during page reload\.
+
+*📚 Platform\-Specific*
+⦁ Linux: `Make Windows compatible` automatically enabled when needed\.
+⦁ Windows: Executables are now signed using SignPath Foundation certificate\.
+⦁ Windows: Can now start SABnzbd directly from installer\.
+⦁ Windows and macOS: Binaries now use Python 3\.14\.
+
+*✏ Bug fixes and changes in 4\.5\.3*
+
+⦁ Remember if `Permanently delete` was previously checked\.
+⦁ All available IP\-addresses will be included when selecting the fastest\.
+⦁ Pre\-queue script rejected NZBs were sometimes reported as `URL Fetching failed`\.
+⦁ RSS `Next scan` time was not adjusted after manual `Read All Feeds Now`\.
+⦁ Prevent renaming of `\.cbr` files during verification\.
+⦁ If `\-\-disable\-file\-log` was enabled, `Show Logging` would crash\.
+⦁ API: Added `time\_added`, timestamp of when the job was added to the queue\.
+⦁ API: History output could contain duplicate items\.
+⦁ Snap: Updated packages and changed build process for reliability\.
+⦁ macOS: Repair would fail on macOS 10\.13 High Sierra\.
+⦁ Windows: Unable to start on Windows 8\.
+⦁ Windows: Updated Unrar to 7\.13, which resolves CVE\-2025\-8088\.
+
+*✏ Bug fixes and changes in 4\.5\.2*
+
+⦁ Added Tab and Shift\+Tab navigation to move between rename fields in queue\.
+⦁ Invalid cookies of other services could result in errors\.
+⦁ Internet Bandwidth test could be stuck in infinite loop\.
+⦁ RSS readout did not ignore torrent alternatives\.
+⦁ Prowl and Pushover settings did not load correctly\.
+⦁ Renamed `osx` to `macos` internally\.
+⦁ API: Removed `B` post\-fix from `quota` and `left\_quota` fields in `queue`\.
+⦁ Windows: Support more languages in the installer\.
+⦁ Windows and macOS: Updated par2cmdline\-turbo to 1\.3\.0 and Unrar to 7\.12\.
+
+*✏ Bug fixes and changes in 4\.5\.1*
+
+⦁ Correct platform detection on Linux\.
+⦁ The `From SxxEyy` RSS filters did not always work\.
+⦁ Windows and macOS: Update Unrar to 7\.11\.
+
+*✏ New features in 4\.5\.0*
+
+⦁ Improved failure detection by downloading additional par2 files right away\.
+⦁ Added more diagnostic information about the system\.
+⦁ Use XFF headers for login validation if `verify\_xff\_header` is enabled\.
+⦁ A
+  \-\=SKIPPED\=\-

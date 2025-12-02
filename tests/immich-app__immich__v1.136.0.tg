@@ -56,7 +56,7 @@
 >
 >*📚 Background/Motivation*
 >
->Relative paths have implied ambiguity, as they depend on the current working directory to resolve correctly, leading to issues like \(\#4465\)\. This change removes this ambiguity and sets up the project to transition away from files living at `/usr/src/app/upload` entirely\. Currently, the `upload` folder lives at `/usr/src/app/upload/upload`, which is *very* confusing… *for everyone*\. This change opens to door for a future migration to something like `IMMICH\_DATA\=/data`, which a more sensible setup\.
+>Relative paths have implied ambiguity, as they depend on the current working directory to resolve correctly, leading to issues like \(\#4465\)\. This change removes this ambiguity and sets up the project to transition away from files living at `/usr/src/app/upload` entirely\. Currently, the `upload` folder lives at `/usr/src/app/upload/upload`, which is _very_ confusing… _for everyone_\. This change opens to door for a future migration to something like `IMMICH\_DATA\=/data`, which a more sensible setup\.
 >
 >
 >*✏ API Key changes \(\#20113\)*
