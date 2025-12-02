@@ -12,7 +12,7 @@
 >Note: if you *DO NOT* have `IMMICH\_MEDIA\_LOCATION` in your `\.env` file, or if it is set to a path that starts with a `/` \(absolute path\), *THIS BREAKING CHANGE DOES NOT APPLY TO YOU\.* Users of the all\-in\-one image \(e\.g\., the unraid app\) for instance are not affected\.
 >
 >
-><hr\>
+>————————
 >
 >
 >If you have a custom `IMMICH\_MEDIA\_LOCATION` environment variable set to a *relative path*, you will have to do the following process:

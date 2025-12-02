@@ -19,7 +19,7 @@
 ⦁ *Monitoring not deferred as per server\-side cache when subscribing*: Since v2\.7\.0, monitoring tasks will be deferred when aggressive server\-side caches \(e\.g\., Cloudflare and RSSHub, which make it futile to check for updates before cache expiration\) are detected\. However, the first monitoring task for a newly subscribed feed was not being deferred\. This has been fixed and the first monitoring task now waits for the server\-side cache to expire\.
 ⦁ *Minor bug fixes*
 
-<hr\>
+————————
 
 *✏ v2\.10\.0: 容器健康检查、特定于聊天的 \#hashtag 和更多*
 
