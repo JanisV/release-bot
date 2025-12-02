@@ -13,11 +13,12 @@ github_extra_html_tags_pattern = re.compile("<p align=\".*?\".*?>|</p>|<a name=\
                                             "</?dd>|</?em>|</?small>|<br>|<!--.*?-->|<p/>",
                                             flags=re.DOTALL)
 github_img_html_tag_pattern = re.compile("<img .*?src=\"(.*?)\".*?>")
-github_extra_extra_html_tags_pattern = re.compile("</?b>|</?i>|</?code>|</a>")
+github_extra_extra_html_tags_pattern = re.compile("</?b>|</?i>|</?code>|</a>|<hr>")
 github_b_html_tag_pattern = re.compile("<b>(.*?)</b>", flags=re.DOTALL)
 github_i_html_tag_pattern = re.compile("<i>(.*?)</i>", flags=re.DOTALL)
 github_code_html_tag_pattern = re.compile("<code>(.*?)</code>", flags=re.DOTALL)
 github_a_html_tag_pattern = re.compile("<a href=\"(.*?)\".*?>(.*?)</a>", flags=re.DOTALL)
+github_hr_html_tag_pattern = re.compile("<hr>")
 
 
 def format_release_message(chat, repo, release):
@@ -76,6 +77,10 @@ def format_release_message(chat, repo, release):
         )
         release_body = github_a_html_tag_pattern.sub(
             "[\\2](\\1)", release_body
+        )
+        release_body = github_hr_html_tag_pattern.sub(
+            "---",
+            release_body
         )
         message = markdownify(f"**{repo.full_name}**\n"
                               f"{f"`{release_title}`" if release_title else ""}"
