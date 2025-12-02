@@ -101,6 +101,7 @@ release_urls = (
     "https://github.com/nextcloud/all-in-one/releases/tag/v12.1.4",
     "https://github.com/numpy/numpy/releases/tag/v2.3.2",
     "https://github.com/python-telegram-bot/python-telegram-bot/releases/tag/v22.3",
+    "https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.13.1",
     "https://github.com/stashapp/stash/releases/tag/v0.29.3",
     "https://github.com/swingmx/swingmusic/releases/tag/v2.1.0",
     "https://github.com/urllib3/urllib3/releases/tag/2.5.0",
