@@ -531,6 +531,10 @@ class TelegramBot(object):
 
             github_release_url = context.args[0]
             path_parts = urllib.parse.urlparse(github_release_url).path.strip('/').split('/')
+            if len(path_parts) < 5 or path_parts[2] != 'releases' or path_parts[3] != 'tag':
+                await update.message.reply_text("Wrong GitHub release URL")
+                return
+
             repo = github_obj.get_repo(f"{path_parts[0]}/{path_parts[1]}")
             release = repo.get_release(path_parts[4])
             release.updated = False
@@ -543,11 +547,11 @@ class TelegramBot(object):
                 parse_mode = ParseMode.MARKDOWN_V2
 
             await update.message.get_bot().send_message(chat_id, message,
-                                                          parse_mode=parse_mode,
-                                                          link_preview_options=LinkPreviewOptions(
-                                                              url=repo.html_url,
-                                                              prefer_small_media=True)
-                                                          )
+                                                        parse_mode=parse_mode,
+                                                        link_preview_options=LinkPreviewOptions(
+                                                            url=repo.html_url,
+                                                            prefer_small_media=True)
+                                                        )
 
     def _pypi2github(self, project_name):
         resp = urllib3.request("GET", f"https://pypi.org/pypi/{project_name}/json")
