@@ -116,8 +116,8 @@ else:
 github_obj = Github(auth=auth)
 
 for release_url in release_urls:
-    release_body = get_release(github_obj, release_url)
-    # release_body = None
+    # release_body = get_release(github_obj, release_url)
+    release_body = None
     message = format_message(release_url, release_body)
 
 for release_url in release_urls:

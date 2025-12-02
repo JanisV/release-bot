@@ -4,7 +4,7 @@
 *📚 Highlights*
 
 ⦁ *Container health check*: The official Docker image includes an automatic health check to determine if the container is running properly\. The health check status can be checked in `docker ps`\. This feature, combined with [\`autoheal\`](https://github\.com/willfarrell/docker\-autoheal) or some other monitoring tool, can restart the container automatically when it is unhealthy\.
-⦁ *Support for chat\-specific \#hashtags*: Telegram recently added a feature called "chat\-specific hashtags," formatting as `\#hashtag\\@username`\. However, escaping '@' broke these hashtags\. Properly supports such hashtags by allowing '@' in hashtags\.
+⦁ *Support for chat\-specific \#hashtags*: Telegram recently added a feature called "chat\-specific hashtags," formatting as `\#hashtag@username`\. However, escaping '@' broke these hashtags\. Properly supports such hashtags by allowing '@' in hashtags\.
 
 *📚 Enhancements*
 
@@ -26,7 +26,7 @@
 *📚 亮点*
 
 ⦁ *容器健康检查*: 官方 Docker 镜像现在包含自动健康检查，用于确定容器是否正常运行。健康检查状态可以在 `docker ps` 中查看。结合 [\`autoheal\`](https://github\.com/willfarrell/docker\-autoheal) 或其他监控工具，当容器不健康时可以自动重启容器。
-⦁ *支持特定于聊天的 \#hashtag*: Telegram 最近添加了一个名为“特定于聊天的 hashtag”的功能，格式为 `\#hashtag\\@username`。然而，转义 `\\@` 会破坏这些 hashtag。通过在 hashtag 中允许 `\\@` 来正确地支持这类 hashtag。
+⦁ *支持特定于聊天的 \#hashtag*: Telegram 最近添加了一个名为“特定于聊天的 hashtag”的功能，格式为 `\#hashtag@username`。然而，转义 `@` 会破坏这些 hashtag。通过在 hashtag 中允许 `@` 来正确地支持这类 hashtag。
 
 *📚 增强*
 
