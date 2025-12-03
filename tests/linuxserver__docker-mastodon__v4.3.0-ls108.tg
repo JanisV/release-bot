@@ -14,15 +14,15 @@ Rebase to Alpine 3\.20, enable [Active Record Encryption](https://github\.com/ma
 This release contains upgrade notes that deviate from the norm:
 
 ‼️ Requires new encryption secrets environment variables\\
-:warning: The minimal supported version for PostgreSQL has been bumped to 12\\
-:warning: The minimal supported version for Ruby has been bumped to 3\.1\\
-:warning: The minimal supported version for Node\.js has been bumped to 18\\
-:warning: Requires rebuilding Elasticsearch accounts index\\
-:warning: We switched from yarn 1 to yarn 4, and recommend using corepack\\
-:warning: The Docker image has been split in two separate images\\
-:warning: Rolling updates from versions earlier than Mastodon 4\.2 are not supported\\
-:warning: StatsD integration has been removed, replaced by OpenTelemetry integration\\
-:warning: ImageMagick is being deprecated and may be removed in a future version\\
+⚠️ The minimal supported version for PostgreSQL has been bumped to 12\\
+⚠️ The minimal supported version for Ruby has been bumped to 3\.1\\
+⚠️ The minimal supported version for Node\.js has been bumped to 18\\
+⚠️ Requires rebuilding Elasticsearch accounts index\\
+⚠️ We switched from yarn 1 to yarn 4, and recommend using corepack\\
+⚠️ The Docker image has been split in two separate images\\
+⚠️ Rolling updates from versions earlier than Mastodon 4\.2 are not supported\\
+⚠️ StatsD integration has been removed, replaced by OpenTelemetry integration\\
+⚠️ ImageMagick is being deprecated and may be removed in a future version\\
 ℹ️ Requires streaming API restart\\
 ℹ️ Requires database migrations\\
 ℹ️ The logging format of the streaming server has changed

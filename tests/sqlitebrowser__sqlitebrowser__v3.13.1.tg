@@ -5,7 +5,7 @@
 >A problem has been reported where the AppImage cannot be run on some previous OS versions,
 >leading to the release of version v2 specifically for the AppImage binary\. Further information: \#3781, https://github\.com/sqlitebrowser/sqlitebrowser/discussions/3775\#discussioncomment\-10969170||
 
-This is a new release with several improvements over the v3\.13\.0 release from three months ago\. :rocket:
+This is a new release with several improvements over the v3\.13\.0 release from three months ago\. 🚀
 
 As a special mention, SQLean has a new `time` extension\! Check out the following link for more information: https://github\.com/nalgeon/sqlean/blob/main/docs/time\.md
 
