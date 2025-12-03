@@ -11,6 +11,8 @@ from app import app, github_obj
 from app.github_emoji import github_emoji_map
 from app.models import Release, Repo
 
+SKIPPED_POSTFIX = "-=SKIPPED=-"
+
 github_extra_html_tags_pattern = re.compile("<p align=\".*?\".*?>|</p>|<a name=\".*?\">|<picture>.*?</picture>|"
                                             "</?h[1-4]>|</?sub>|</?sup>|</?details>|</?summary>|</?dl>|</?dt>|"
                                             "</?dd>|</?em>|</?small>|<br>|<!--.*?-->|<p/>",
@@ -25,18 +27,41 @@ github_emoji_pattern = re.compile(r':[a-z0-9_-]+:')
 
 
 def htmlify_release_body(repo, release):
-    rendered_release_body = github_obj.render_markdown(release.body)
+    current_tag = release.tag_name
+    if (release.title == current_tag or
+            release.title == f"v{current_tag}" or
+            f"v{release.title}" == current_tag):
+        # Skip release title when it is equal to tag
+        release_title = ""
+    else:
+        release_title = release.title
+
+    release_body = (
+        f"**{repo.full_name}**<br>"
+        f"{f"`{release_title}`" if release_title else ""}"
+        f" [{current_tag}]({release.html_url})"
+        f"{" _pre-release_" if release.prerelease else ""}"
+        f"{" _updated_" if release.updated else ""}\n\n"
+        f"{release.body}"
+    )
+
+    rendered_release_body = github_obj.render_markdown(release_body)
     print(rendered_release_body.encode('ascii', errors='replace').decode('ascii'))
     result = transform_html(rendered_release_body)
-    print(len(result.text))
     print(result.text.encode('ascii', errors='replace').decode('ascii'))
     print(result.entities)
+
+    message_len = len(result.text)
+    if message_len > MessageLimit.MAX_TEXT_LENGTH:
+        message_len = MessageLimit.MAX_TEXT_LENGTH - len(SKIPPED_POSTFIX) - 1
+        result.text = f"{result.text[:message_len]}\n{SKIPPED_POSTFIX}"
+
     entities = []
     for entity in result.entities:
-        if entity['offset'] >= MessageLimit.MAX_TEXT_LENGTH:
+        if entity['offset'] >= message_len:
             continue
-        if entity['offset'] + entity['length'] >= MessageLimit.MAX_TEXT_LENGTH:
-            entity['length'] = MessageLimit.MAX_TEXT_LENGTH - entity['offset']
+        if entity['offset'] + entity['length'] >= message_len:
+            entity['length'] = message_len - entity['offset']
         url = None
         if 'url' in entity:
             url = entity['url']
@@ -46,7 +71,7 @@ def htmlify_release_body(repo, release):
                                        url=url)
         entities.append(message_entity)
 
-    return result.text[:MessageLimit.MAX_TEXT_LENGTH], entities
+    return result.text, entities
 
 
 def format_release_message(chat, repo, release):
@@ -60,7 +85,7 @@ def format_release_message(chat, repo, release):
         release_body
     )
     if len(release_body) > MessageLimit.MAX_TEXT_LENGTH - 256:
-        release_body = f"{release_body[:MessageLimit.MAX_TEXT_LENGTH - 256]}\n-=SKIPPED=-"
+        release_body = f"{release_body[:MessageLimit.MAX_TEXT_LENGTH - 50]}\n{SKIPPED_POSTFIX}"
 
     current_tag = release.tag_name
     if (release.title == current_tag or
@@ -122,7 +147,7 @@ def format_release_message(chat, repo, release):
                               f"{" _updated_" if release.updated else ""}\n\n"
                               f"{release_body}")
         while len(message) >= MessageLimit.MAX_TEXT_LENGTH:
-            release_body = f"{release_body[:-100]}\n-=SKIPPED=-"
+            release_body = f"{release_body[:-100]}\n{SKIPPED_POSTFIX}"
             message = markdownify(f"**{repo.full_name}**\n"
                                   f"{f"`{release_title}`" if release_title else ""}"
                                   f" [{current_tag}]({release.html_url})"
