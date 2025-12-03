@@ -12,6 +12,7 @@ import urllib3
 from sqlalchemy import true
 from telegram import Chat as TelegramChat
 from telegram import Update, LinkPreviewOptions, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram._utils.defaultvalue import DEFAULT_NONE
 from telegram.constants import InlineKeyboardMarkupLimit, ParseMode
 from telegram.ext import (
     Application,
@@ -25,7 +26,7 @@ from telegram.ext import (
 from app import github_obj, db
 from app._version import __version__
 from app.models import Chat, Repo, ChatRepo, Release
-from app.repo_engine import store_latest_release, format_release_message
+from app.repo_engine import store_latest_release, format_release_message, htmlify_release_body
 
 MAX_UPLOADED_FILE_SIZE = 1024 * 10  # 10kB
 
@@ -360,13 +361,15 @@ class TelegramBot(object):
             elif query.data == "release_note_format":
                 with self.app.app_context():
                     chat = get_or_create_chat(db.session, chat_id)
-                    keyboard = [[InlineKeyboardButton(f"Quote {"✅" if chat.release_note_format == "quote" else ""}",
+                    keyboard = [[InlineKeyboardButton(f"{"✅" if chat.release_note_format == "quote" else ""} Quote",
                                                       callback_data="release_note_format-quote"),
-                                 InlineKeyboardButton(f"Pre {"✅" if chat.release_note_format == "pre" else ""}",
+                                 InlineKeyboardButton(f"{"✅" if chat.release_note_format == "pre" else ""} Pre",
                                                       callback_data="release_note_format-pre"),
-                                 InlineKeyboardButton(f"Markdown {"✅" if not chat.release_note_format else ""}",
-                                                      callback_data="release_note_format-markdown"), ],
-                                [InlineKeyboardButton("Cancel", callback_data="cancel")]]
+                                 InlineKeyboardButton(f"{"✅" if not chat.release_note_format else ""} Markdown",
+                                                      callback_data="release_note_format-markdown"),
+                                 InlineKeyboardButton(f"{"✅" if chat.release_note_format == "html" else ""} HTML",
+                                                      callback_data="release_note_format-html"), ],
+                        [InlineKeyboardButton("Cancel", callback_data="cancel")]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
 
                 await query.edit_message_reply_markup(reply_markup)
@@ -379,6 +382,8 @@ class TelegramBot(object):
                         chat.release_note_format = "pre"
                     elif query.data == "release_note_format-markdown":
                         chat.release_note_format = None
+                    elif query.data == "release_note_format-html":
+                        chat.release_note_format = "html"
                     else:
                         await update.message.reply_text("Error: Unknown format.")
                         return
@@ -539,15 +544,21 @@ class TelegramBot(object):
             release = repo.get_release(path_parts[4])
             release.updated = False
 
-            message = format_release_message(chat, repo, release)
-
-            if chat.release_note_format in ("quote", "pre"):
-                parse_mode = ParseMode.HTML
+            if chat.release_note_format == "html":
+                message, entities = htmlify_release_body(repo, release)
+                parse_mode = DEFAULT_NONE
             else:
-                parse_mode = ParseMode.MARKDOWN_V2
+                message = format_release_message(chat, repo, release)
+                entities = None
+
+                if chat.release_note_format in ("quote", "pre"):
+                    parse_mode = ParseMode.HTML
+                else:
+                    parse_mode = ParseMode.MARKDOWN_V2
 
             await update.message.get_bot().send_message(chat_id, message,
                                                         parse_mode=parse_mode,
+                                                        entities=entities,
                                                         link_preview_options=LinkPreviewOptions(
                                                             url=repo.html_url,
                                                             prefer_small_media=True)
@@ -642,6 +653,7 @@ class TelegramBot(object):
                 repo = github_obj.get_repo(repo_name)
             except github.GithubException as e:
                 await update.message.reply_text("Sorry, I can't find that repo.")
+                print(f"GithubException for {repo_name} in message: {e}")
                 return
 
             await self.add_repo(chat_id, repo, update.get_bot(), False)

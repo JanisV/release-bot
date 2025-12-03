@@ -2,10 +2,12 @@ import re
 from datetime import datetime, timezone, timedelta
 
 import github
+from sulguk import transform_html
+from telegram import MessageEntity
 from telegram.constants import MessageLimit
 from telegramify_markdown import markdownify
 
-from app import app
+from app import app, github_obj
 from app.github_emoji import github_emoji_map
 from app.models import Release, Repo
 
@@ -20,6 +22,31 @@ github_i_html_tag_pattern = re.compile("<i>(.*?)</i>", flags=re.DOTALL)
 github_code_html_tag_pattern = re.compile("<code>(.*?)</code>", flags=re.DOTALL)
 github_a_html_tag_pattern = re.compile("<a href=\"(.*?)\".*?>(.*?)</a>", flags=re.DOTALL)
 github_emoji_pattern = re.compile(r':[a-z0-9_-]+:')
+
+
+def htmlify_release_body(repo, release):
+    rendered_release_body = github_obj.render_markdown(release.body)
+    print(rendered_release_body.encode('ascii', errors='replace').decode('ascii'))
+    result = transform_html(rendered_release_body)
+    print(len(result.text))
+    print(result.text.encode('ascii', errors='replace').decode('ascii'))
+    print(result.entities)
+    entities = []
+    for entity in result.entities:
+        if entity['offset'] >= MessageLimit.MAX_TEXT_LENGTH:
+            continue
+        if entity['offset'] + entity['length'] >= MessageLimit.MAX_TEXT_LENGTH:
+            entity['length'] = MessageLimit.MAX_TEXT_LENGTH - entity['offset']
+        url = None
+        if 'url' in entity:
+            url = entity['url']
+            if url.startswith('#'):
+                continue
+        message_entity = MessageEntity(entity['type'], entity['offset'], entity['length'],
+                                       url=url)
+        entities.append(message_entity)
+
+    return result.text[:MessageLimit.MAX_TEXT_LENGTH], entities
 
 
 def format_release_message(chat, repo, release):

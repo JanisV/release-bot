@@ -5,15 +5,16 @@ import telegram
 from github.GitRelease import GitRelease
 from github.Tag import Tag
 from telegram import LinkPreviewOptions
+from telegram._utils.defaultvalue import DEFAULT_NONE
 from telegram.constants import ParseMode
 
 from app import models
 from app import github_obj, db, telegram_bot, scheduler
 from app.models import ChatRepo
-from app.repo_engine import store_latest_release, format_release_message
+from app.repo_engine import store_latest_release, format_release_message, htmlify_release_body
 
 
-@scheduler.task('cron', id='poll_github', hour='*')
+@scheduler.task('cron', id='poll_github', hour='*/3')
 def poll_github():
     with scheduler.app.app_context():
         for repo_obj in models.Repo.query.all():
@@ -82,17 +83,23 @@ def poll_github():
                 release = release_or_tag
 
                 for chat in repo_obj.chats:
-                    message = format_release_message(chat, repo, release)
-
-                    if chat.release_note_format in ("quote", "pre"):
-                        parse_mode = ParseMode.HTML
+                    if chat.release_note_format == "html":
+                        message, entities = htmlify_release_body(repo, release)
+                        parse_mode = DEFAULT_NONE
                     else:
-                        parse_mode = ParseMode.MARKDOWN_V2
+                        message = format_release_message(chat, repo, release)
+                        entities = None
+
+                        if chat.release_note_format in ("quote", "pre"):
+                            parse_mode = ParseMode.HTML
+                        else:
+                            parse_mode = ParseMode.MARKDOWN_V2
 
                     try:
                         asyncio.run(telegram_bot.send_message(chat_id=chat.id,
                                                               text=message,
                                                               parse_mode=parse_mode,
+                                                              entities=entities,
                                                               link_preview_options=LinkPreviewOptions(
                                                                   url=repo_obj.link,
                                                                   prefer_small_media=True)
