@@ -6,6 +6,7 @@ from telegram.constants import MessageLimit
 from telegramify_markdown import markdownify
 
 from app import app
+from app.github_emoji import github_emoji_map
 from app.models import Release, Repo
 
 github_extra_html_tags_pattern = re.compile("<p align=\".*?\".*?>|</p>|<a name=\".*?\">|<picture>.*?</picture>|"
@@ -18,6 +19,7 @@ github_b_html_tag_pattern = re.compile("<b>(.*?)</b>", flags=re.DOTALL)
 github_i_html_tag_pattern = re.compile("<i>(.*?)</i>", flags=re.DOTALL)
 github_code_html_tag_pattern = re.compile("<code>(.*?)</code>", flags=re.DOTALL)
 github_a_html_tag_pattern = re.compile("<a href=\"(.*?)\".*?>(.*?)</a>", flags=re.DOTALL)
+github_emoji_pattern = re.compile(r':[a-z0-9_-]+:')
 
 
 def format_release_message(chat, repo, release):
@@ -83,6 +85,9 @@ def format_release_message(chat, repo, release):
         release_body = release_body.replace("[!IMPORTANT]", "**❗ Important**")
         release_body = release_body.replace("[!WARNING]", "**⚠️ Warning**")
         release_body = release_body.replace("[!CAUTION]", "**🛑 Caution**")
+        if github_emoji_pattern.search(release_body):
+            for key, value in github_emoji_map.items():
+                release_body = release_body.replace(f":{key}:", value)
         message = markdownify(f"**{repo.full_name}**\n"
                               f"{f"`{release_title}`" if release_title else ""}"
                               f" [{current_tag}]({release.html_url})"
