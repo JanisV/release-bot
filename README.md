@@ -40,7 +40,7 @@ Other similar tools:
 `/starred username` - subscribe to user's starred repos  
 `/starred` - unsubscribe from user's starred repos  
 `/settings` - change output format  
-`/stats` - basic server statistics
+`/stats` - basic server statistics  
 `/test URL` - show specified release message
 
 ## Stack
