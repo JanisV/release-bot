@@ -4,7 +4,8 @@ from datetime import datetime, timezone, timedelta
 import github
 from sulguk import transform_html
 from telegram import MessageEntity
-from telegram.constants import MessageLimit
+from telegram._utils.defaultvalue import DEFAULT_NONE
+from telegram.constants import MessageLimit, ParseMode
 from telegramify_markdown import markdownify
 
 from app import app, github_obj
@@ -68,10 +69,12 @@ def htmlify_release_body(release_note_format, repo, release):
     release_body = f"{header}{release.body}"
 
     rendered_release_body = github_obj.render_markdown(release_body)
-    print(rendered_release_body.encode('ascii', errors='replace').decode('ascii'))
-    result = transform_html(rendered_release_body)
-    print(result.text.encode('ascii', errors='replace').decode('ascii'))
-    print(result.entities)
+    try:
+        result = transform_html(rendered_release_body)
+    except ValueError as e:
+        print(f"Exception for {repo.full_name} in htmlify_release_body: {e}")
+        release_note_format = ""
+        return markdownify_release_message(release_note_format, repo, release), ParseMode.MARKDOWN_V2, None
 
     message_len = len(result.text)
     if message_len > MessageLimit.MAX_TEXT_LENGTH:
@@ -93,7 +96,7 @@ def htmlify_release_body(release_note_format, repo, release):
                                        url=url)
         entities.append(message_entity)
 
-    return result.text, entities
+    return result.text, DEFAULT_NONE, entities
 
 
 def codeify_release_message(release_note_format, repo, release):
@@ -166,14 +169,16 @@ def markdownify_release_message(release_note_format, repo, release):
 def format_release_message(release_note_format, repo, release):
     if release_note_format in ("quote", "pre"):
         message = codeify_release_message(release_note_format, repo, release)
+        parse_mode = ParseMode.MARKDOWN_V2
         entities = None
     elif release_note_format == "html":
-        message, entities = htmlify_release_body(release_note_format, repo, release)
+        message, parse_mode, entities = htmlify_release_body(release_note_format, repo, release)
     else:
         message = markdownify_release_message(release_note_format, repo, release)
+        parse_mode = ParseMode.HTML
         entities = None
 
-    return message, entities
+    return message, parse_mode, entities
 
 
 def store_latest_release(session, repo, repo_obj):

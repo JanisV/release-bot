@@ -12,7 +12,6 @@ import urllib3
 from sqlalchemy import true
 from telegram import Chat as TelegramChat
 from telegram import Update, LinkPreviewOptions, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram._utils.defaultvalue import DEFAULT_NONE
 from telegram.constants import InlineKeyboardMarkupLimit, ParseMode
 from telegram.ext import (
     Application,
@@ -544,14 +543,7 @@ class TelegramBot(object):
             release = repo.get_release(path_parts[4])
             release.updated = False
 
-            message, entities = format_release_message(chat.release_note_format, repo, release)
-
-            if chat.release_note_format in ("quote", "pre"):
-                parse_mode = ParseMode.HTML
-            elif chat.release_note_format == "html":
-                parse_mode = DEFAULT_NONE
-            else:
-                parse_mode = ParseMode.MARKDOWN_V2
+            message, parse_mode, entities = format_release_message(chat.release_note_format, repo, release)
 
             await update.message.get_bot().send_message(chat_id, message,
                                                         parse_mode=parse_mode,
