@@ -83,17 +83,14 @@ def poll_github():
                 release = release_or_tag
 
                 for chat in repo_obj.chats:
-                    if chat.release_note_format == "html":
-                        message, entities = htmlify_release_body(repo, release)
+                    message, entities = format_release_message(chat.release_note_format, repo, release)
+
+                    if chat.release_note_format in ("quote", "pre"):
+                        parse_mode = ParseMode.HTML
+                    elif chat.release_note_format == "html":
                         parse_mode = DEFAULT_NONE
                     else:
-                        message = format_release_message(chat, repo, release)
-                        entities = None
-
-                        if chat.release_note_format in ("quote", "pre"):
-                            parse_mode = ParseMode.HTML
-                        else:
-                            parse_mode = ParseMode.MARKDOWN_V2
+                        parse_mode = ParseMode.MARKDOWN_V2
 
                     try:
                         asyncio.run(telegram_bot.send_message(chat_id=chat.id,
