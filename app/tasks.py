@@ -127,17 +127,13 @@ def poll_github():
                     if not chat_repo.process_pre_releases:
                         break
 
-                    message = format_release_message(chat, repo, release)
-
-                    if chat.release_note_format in ("quote", "pre"):
-                        parse_mode = ParseMode.HTML
-                    else:
-                        parse_mode = ParseMode.MARKDOWN_V2
+                    message, parse_mode, entities = format_release_message(chat.release_note_format, repo, release)
 
                     try:
                         asyncio.run(telegram_bot.send_message(chat_id=chat.id,
                                                               text=message,
                                                               parse_mode=parse_mode,
+                                                              entities=entities,
                                                               link_preview_options=LinkPreviewOptions(
                                                                   url=repo_obj.link,
                                                                   prefer_small_media=True)
