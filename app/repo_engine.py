@@ -123,6 +123,8 @@ def codeify_release_message(release_note_format, repo, release):
 
 def markdownify_release_message(release_note_format, repo, release):
     release_body = release.body
+    if release_body is None:
+        release_body = "None"
     release_body = github_extra_html_tags_pattern.sub(
         "",
         release_body
@@ -169,13 +171,13 @@ def markdownify_release_message(release_note_format, repo, release):
 def format_release_message(release_note_format, repo, release):
     if release_note_format in ("quote", "pre"):
         message = codeify_release_message(release_note_format, repo, release)
-        parse_mode = ParseMode.MARKDOWN_V2
+        parse_mode = ParseMode.HTML
         entities = None
     elif release_note_format == "html":
         message, parse_mode, entities = htmlify_release_body(release_note_format, repo, release)
     else:
         message = markdownify_release_message(release_note_format, repo, release)
-        parse_mode = ParseMode.HTML
+        parse_mode = ParseMode.MARKDOWN_V2
         entities = None
 
     return message, parse_mode, entities
