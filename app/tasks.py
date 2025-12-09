@@ -80,6 +80,7 @@ def poll_github():
             release_or_tag, prerelease = store_latest_release(db.session, repo, repo_obj)
             if isinstance(release_or_tag, GitRelease):
                 release = release_or_tag
+                scheduler.app.logger.info(f"Process new release {release.title}")
 
                 for chat in repo_obj.chats:
                     message, parse_mode, entities = format_release_message(chat.release_note_format, repo, release)
@@ -99,6 +100,7 @@ def poll_github():
                         db.session.commit()
             elif isinstance(release_or_tag, Tag):
                 tag = release_or_tag
+                scheduler.app.logger.info(f"Process new tag {tag.name}")
 
                 # TODO: Use tag.message as release_body text
                 message = (f"<a href='{repo.html_url}'>{repo.full_name}</a>:\n"
@@ -119,6 +121,7 @@ def poll_github():
                         db.session.commit()
             if isinstance(prerelease, GitRelease):
                 release = prerelease
+                scheduler.app.logger.info(f"Process new prerelease {release.title}")
 
                 for chat in repo_obj.chats:
                     chat_repo = db.session.query(ChatRepo) \
