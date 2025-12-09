@@ -48,6 +48,7 @@ Other similar tools:
 - Python 3.12
 - Flask
 - telegramify_markdown
+- sulguk
 - python-telegram-bot
 - PyGithub
 - APScheduler via Flask-APScheduler
