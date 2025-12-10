@@ -80,19 +80,16 @@ def poll_github():
             release_or_tag, prerelease = store_latest_release(db.session, repo, repo_obj)
             if isinstance(release_or_tag, GitRelease):
                 release = release_or_tag
+                scheduler.app.logger.info(f"Process new release {release.title}")
 
                 for chat in repo_obj.chats:
-                    message = format_release_message(chat, repo, release)
-
-                    if chat.release_note_format in ("quote", "pre"):
-                        parse_mode = ParseMode.HTML
-                    else:
-                        parse_mode = ParseMode.MARKDOWN_V2
+                    message, parse_mode, entities = format_release_message(chat.release_note_format, repo, release)
 
                     try:
                         asyncio.run(telegram_bot.send_message(chat_id=chat.id,
                                                               text=message,
                                                               parse_mode=parse_mode,
+                                                              entities=entities,
                                                               link_preview_options=LinkPreviewOptions(
                                                                   url=repo_obj.link,
                                                                   prefer_small_media=True)
@@ -103,6 +100,7 @@ def poll_github():
                         db.session.commit()
             elif isinstance(release_or_tag, Tag):
                 tag = release_or_tag
+                scheduler.app.logger.info(f"Process new tag {tag.name}")
 
                 # TODO: Use tag.message as release_body text
                 message = (f"<a href='{repo.html_url}'>{repo.full_name}</a>:\n"
@@ -123,6 +121,7 @@ def poll_github():
                         db.session.commit()
             if isinstance(prerelease, GitRelease):
                 release = prerelease
+                scheduler.app.logger.info(f"Process new prerelease {release.title}")
 
                 for chat in repo_obj.chats:
                     chat_repo = db.session.query(ChatRepo) \
@@ -131,17 +130,13 @@ def poll_github():
                     if not chat_repo.process_pre_releases:
                         break
 
-                    message = format_release_message(chat, repo, release)
-
-                    if chat.release_note_format in ("quote", "pre"):
-                        parse_mode = ParseMode.HTML
-                    else:
-                        parse_mode = ParseMode.MARKDOWN_V2
+                    message, parse_mode, entities = format_release_message(chat.release_note_format, repo, release)
 
                     try:
                         asyncio.run(telegram_bot.send_message(chat_id=chat.id,
                                                               text=message,
                                                               parse_mode=parse_mode,
+                                                              entities=entities,
                                                               link_preview_options=LinkPreviewOptions(
                                                                   url=repo_obj.link,
                                                                   prefer_small_media=True)
