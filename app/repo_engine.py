@@ -189,12 +189,16 @@ def store_latest_release(session, repo, repo_obj):
     tag = None
 
     if app.config['PROCESS_PRE_RELEASES']:
-        if repo.get_releases().totalCount > 0:
-            prerelease = repo.get_releases()[0]
-            if not prerelease.prerelease or prerelease.draft:
-                prerelease = None
-            if prerelease and datetime.now(timezone.utc) - timedelta(minutes=15) < prerelease.published_at:
-                prerelease = None
+        releases = repo.get_releases()
+        try:
+            prerelease = releases[0]
+        except IndexError:
+            pass
+
+        if prerelease and not prerelease.prerelease or prerelease.draft:
+            prerelease = None
+        if prerelease and datetime.now(timezone.utc) - timedelta(minutes=15) < prerelease.published_at:
+            prerelease = None
 
     try:
         release = repo.get_latest_release()
