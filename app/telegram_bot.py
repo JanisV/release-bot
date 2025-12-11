@@ -86,6 +86,7 @@ class TelegramBot(object):
         self.application.add_handler(CommandHandler("editlist", self.edit_list_command))
         self.application.add_handler(CommandHandler("help", self.help_command))
         self.application.add_handler(CommandHandler("list", self.list_command))
+        self.application.add_handler(CommandHandler("prerelease", self.prerelease_command))
         self.application.add_handler(CommandHandler("settings", self.settings_command))
         self.application.add_handler(CommandHandler("starred", self.starred_command))
         self.application.add_handler(CommandHandler("start", self.start_command))
@@ -113,6 +114,8 @@ class TelegramBot(object):
     async def set_commands(self, application):
         await application.bot.set_my_commands([('list', "show your subscriptions"),
                                                ('editlist', "show and edit your subscriptions"),
+                                               ('prerelease', "unsubscribe from repo pre-releases"),
+                                               ('delete', "unsubscribe from repo releases"),
                                                ('starred', "subscribe to user's starred repos"),
                                                ('settings', "change output format"),
                                                ('about', "information about this bot"),
@@ -148,6 +151,8 @@ class TelegramBot(object):
                 "/editlist - show and edit your subscriptions\n"
                 "/delete - (in reply to release note message) unsubscribe from repo\n"
                 "/delete owner/repo - unsubscribe from specified repo\n"
+                "/prerelease - (in reply to release note message) unsubscribe from pre-releases of specified repo\n"
+                "/prerelease owner/repo - unsubscribe from pre-releases of specified repo\n"
                 "/starred username - subscribe to user's starred repos\n"
                 "/starred - unsubscribe from user's starred repos\n"
                 "/settings - change output format\n"
@@ -173,8 +178,50 @@ class TelegramBot(object):
                 link_preview_options=LinkPreviewOptions(is_disabled=True),
             )
 
+    async def prerelease_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        """Process the command /prerelease."""
+        if self._get_chat_id(update):
+            if chat_id := self._get_chat_id(update):
+                with self.app.app_context():
+                    if update.message.reply_to_message:
+                        repo_name = update.message.reply_to_message.text.split('\n', 1)[0]
+                    else:
+                        if not context.args or len(context.args) != 1 or not direct_pattern.search(context.args[0]):
+                            await update.message.reply_text(
+                                "Specify a GitHub repo in the following format: /delete owner/repo")
+                            return
+
+                        repo_name = context.args[0]
+
+                    chat = get_or_create_chat(db.session, chat_id)
+                    repo_obj = db.session.query(Repo) \
+                        .filter(Repo.full_name == repo_name) \
+                        .first()
+                    if repo_obj and repo_obj in chat.repos:
+                        chat_repo = db.session.query(ChatRepo) \
+                            .filter(ChatRepo.chat_id == chat.id).filter(ChatRepo.repo_id == repo_obj.id) \
+                            .first()
+                        chat_repo.process_pre_releases = not chat_repo.process_pre_releases
+                        db.session.commit()
+
+                        if chat_repo.process_pre_releases:
+                            reply_message = f"You are subscribed to repo <b>{repo_obj.full_name}</b> pre-releases."
+                        else:
+                            reply_message = f"You are unsubscribed from repo <b>{repo_obj.full_name}</b> pre-releases."
+                        repo_url = repo_obj.link
+                        await update.message.get_bot().send_message(chat_id, reply_message,
+                                                                    parse_mode=ParseMode.HTML,
+                                                                    link_preview_options=LinkPreviewOptions(
+                                                                        url=repo_url,
+                                                                        prefer_small_media=True)
+                                                                    )
+                    else:
+                        await update.message.reply_text(
+                            "Error: Repo not founded."
+                        )
+
     async def delete_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        """Send a message when the command /delete is issued."""
+        """Process the command /delete."""
         if self._get_chat_id(update):
             if chat_id := self._get_chat_id(update):
                 with self.app.app_context():
