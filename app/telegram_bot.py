@@ -81,13 +81,14 @@ class TelegramBot(object):
 
         self.application = Application.builder().token(self.app.config['TELEGRAM_BOT_TOKEN']).build()
 
-        self.application.add_handler(CommandHandler("start", self.start_command))
         self.application.add_handler(CommandHandler("about", self.about_command))
+        self.application.add_handler(CommandHandler("delete", self.delete_command))
+        self.application.add_handler(CommandHandler("editlist", self.edit_list_command))
         self.application.add_handler(CommandHandler("help", self.help_command))
         self.application.add_handler(CommandHandler("list", self.list_command))
-        self.application.add_handler(CommandHandler("editlist", self.edit_list_command))
-        self.application.add_handler(CommandHandler("starred", self.starred_command))
         self.application.add_handler(CommandHandler("settings", self.settings_command))
+        self.application.add_handler(CommandHandler("starred", self.starred_command))
+        self.application.add_handler(CommandHandler("start", self.start_command))
         self.application.add_handler(CommandHandler("stats", self.stats_command))
         self.application.add_handler(CommandHandler("test", self.test_command))
         self.application.add_handler(MessageHandler(filters.COMMAND, self.unknown_command))
@@ -137,7 +138,7 @@ class TelegramBot(object):
         """Send a message when the command /help is issued."""
         if self._get_chat_id(update):
             await update.message.reply_text(
-                "For subscribe to a new GitHub releases send a message containing owner and name of repo (owner/name), "
+                "For subscribe to a new GitHub releases send a message containing owner and name of repo (owner/repo), "
                 "GitHub/PyPI/npm URL or upload requirements.txt or package.json file.\n\n"
                 "Available commands:\n"
                 "/start - show welcome message\n"
@@ -145,6 +146,8 @@ class TelegramBot(object):
                 "/help - brief usage info\n"
                 "/list - show your subscriptions\n"
                 "/editlist - show and edit your subscriptions\n"
+                "/delete - (in reply to release note message) unsubscribe from repo\n"
+                "/delete owner/repo - unsubscribe from specified repo\n"
                 "/starred username - subscribe to user's starred repos\n"
                 "/starred - unsubscribe from user's starred repos\n"
                 "/settings - change output format\n"
@@ -169,6 +172,42 @@ class TelegramBot(object):
                 text,
                 link_preview_options=LinkPreviewOptions(is_disabled=True),
             )
+
+    async def delete_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        """Send a message when the command /delete is issued."""
+        if self._get_chat_id(update):
+            if chat_id := self._get_chat_id(update):
+                with self.app.app_context():
+                    if update.message.reply_to_message:
+                        repo_name = update.message.reply_to_message.text.split('\n', 1)[0]
+                    else:
+                        if not context.args or len(context.args) != 1 or not direct_pattern.search(context.args[0]):
+                            await update.message.reply_text(
+                                "Specify a GitHub repo in the following format: /delete owner/repo")
+                            return
+
+                        repo_name = context.args[0]
+
+                    chat = get_or_create_chat(db.session, chat_id)
+                    repo_obj = db.session.query(Repo) \
+                        .filter(Repo.full_name == repo_name) \
+                        .first()
+                    if repo_obj and repo_obj in chat.repos:
+                        chat.repos.remove(repo_obj)
+                        db.session.commit()
+
+                        reply_message = f"Deleted repo: <b>{repo_obj.full_name}</b>"
+                        repo_url = repo_obj.link
+                        await update.message.get_bot().send_message(chat_id, reply_message,
+                                                                    parse_mode=ParseMode.HTML,
+                                                                    link_preview_options=LinkPreviewOptions(
+                                                                        url=repo_url,
+                                                                        prefer_small_media=True)
+                                                                    )
+                    else:
+                        await update.message.reply_text(
+                            "Error: Repo not founded."
+                        )
 
     def get_repo_keyboard(self, chat_id, curr_page):
         btn_per_line = 4
