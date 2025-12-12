@@ -44,6 +44,7 @@ class ChatRepo(db.Model):
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'), primary_key=True)
     repo_id = db.Column(db.Integer, db.ForeignKey('repo.id'), primary_key=True)
     process_pre_releases = db.Column(db.Boolean, default=True, server_default=db.sql.True_())
+    starred = db.Column(db.Boolean, default=False, server_default=db.sql.False_())
 
 
 class Release(db.Model):

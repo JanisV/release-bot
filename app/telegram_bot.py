@@ -165,13 +165,20 @@ class TelegramBot(object):
             with self.app.app_context():
                 text = "Your subscriptions:\n"
                 chat = get_or_create_chat(db.session, chat_id)
-                for i, repo in enumerate(chat.repos):
+                for i, repo_obj in enumerate(chat.repos):
                     repo_emoji = ''
-                    if repo.archived:
+                    if repo_obj.archived:
                         repo_emoji += ' 📦'
-                    if repo.blocked:
+                    if repo_obj.blocked:
                         repo_emoji += ' 🚫'
-                    text += f"{i + 1}. <b><a href='{repo.link}'>{repo.full_name}</a></b>{repo_emoji}\n"
+
+                    chat_repo = db.session.query(ChatRepo) \
+                        .filter(ChatRepo.chat_id == chat.id).filter(ChatRepo.repo_id == repo_obj.id) \
+                        .first()
+                    if chat_repo.starred:
+                        repo_emoji += ' ⭐'
+
+                    text += f"{i + 1}. <b><a href='{repo_obj.link}'>{repo_obj.full_name}</a></b>{repo_emoji}\n"
 
             await update.message.reply_html(
                 text,
@@ -394,7 +401,7 @@ class TelegramBot(object):
                     await bot.send_message(
                         chat_id=chat.id,
                         text=f"Added GitHub repo: <b>{repo.full_name}</b>, "
-                             f"but it has not releases",
+                             f"but it has no releases",
                         parse_mode=ParseMode.HTML,
                         link_preview_options=LinkPreviewOptions(
                             url=repo.html_url,

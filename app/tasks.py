@@ -164,6 +164,16 @@ def poll_github_user():
                 db.session.delete(chat)
                 db.session.commit()
 
+            for repo_obj in chat.repos:
+                repo = github_obj.get_repo(repo_obj.id)
+                starred = repo in github_user.get_starred()
+                chat_repo = db.session.query(ChatRepo) \
+                    .filter(ChatRepo.chat_id == chat.id).filter(ChatRepo.repo_id == repo_obj.id) \
+                    .first()
+                if chat_repo.starred != starred:
+                    chat_repo.starred = starred
+                    db.session.commit()
+
 
 @scheduler.task('cron', id='clear_db', week='*')
 def clear_db():
