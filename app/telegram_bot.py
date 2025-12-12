@@ -184,19 +184,23 @@ class TelegramBot(object):
             if chat_id := self._get_chat_id(update):
                 with self.app.app_context():
                     if update.message.reply_to_message:
-                        repo_name = update.message.reply_to_message.text.split('\n', 1)[0]
+                        repo_url = update.message.reply_to_message.link_preview_options.url
+                        repo_obj = db.session.query(Repo) \
+                            .filter(Repo.link == repo_url) \
+                            .first()
                     else:
                         if not context.args or len(context.args) != 1 or not direct_pattern.search(context.args[0]):
                             await update.message.reply_text(
-                                "Specify a GitHub repo in the following format: /delete owner/repo")
+                                "Specify a GitHub repo in the following format: /prerelease owner/repo")
                             return
 
                         repo_name = context.args[0]
+                        repo_obj = db.session.query(Repo) \
+                            .filter(Repo.full_name == repo_name) \
+                            .first()
 
                     chat = get_or_create_chat(db.session, chat_id)
-                    repo_obj = db.session.query(Repo) \
-                        .filter(Repo.full_name == repo_name) \
-                        .first()
+
                     if repo_obj and repo_obj in chat.repos:
                         chat_repo = db.session.query(ChatRepo) \
                             .filter(ChatRepo.chat_id == chat.id).filter(ChatRepo.repo_id == repo_obj.id) \
@@ -226,7 +230,10 @@ class TelegramBot(object):
             if chat_id := self._get_chat_id(update):
                 with self.app.app_context():
                     if update.message.reply_to_message:
-                        repo_name = update.message.reply_to_message.text.split('\n', 1)[0]
+                        repo_url = update.message.reply_to_message.link_preview_options.url
+                        repo_obj = db.session.query(Repo) \
+                            .filter(Repo.link == repo_url) \
+                            .first()
                     else:
                         if not context.args or len(context.args) != 1 or not direct_pattern.search(context.args[0]):
                             await update.message.reply_text(
@@ -234,11 +241,12 @@ class TelegramBot(object):
                             return
 
                         repo_name = context.args[0]
+                        repo_obj = db.session.query(Repo) \
+                            .filter(Repo.full_name == repo_name) \
+                            .first()
 
                     chat = get_or_create_chat(db.session, chat_id)
-                    repo_obj = db.session.query(Repo) \
-                        .filter(Repo.full_name == repo_name) \
-                        .first()
+
                     if repo_obj and repo_obj in chat.repos:
                         chat.repos.remove(repo_obj)
                         db.session.commit()
