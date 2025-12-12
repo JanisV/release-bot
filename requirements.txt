@@ -9,4 +9,4 @@ PyGithub~=2.8.1
 requirements-parser~=0.11.0
 sulguk~=0.11.0
 telegramify_markdown~=0.5.3
-urllib3~=2.6.1
+urllib3~=2.6.2
