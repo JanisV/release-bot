@@ -195,7 +195,7 @@ def store_latest_release(session, repo, repo_obj):
         except IndexError:
             pass
 
-        if prerelease and not prerelease.prerelease or prerelease.draft:
+        if prerelease and (not prerelease.prerelease or prerelease.draft):
             prerelease = None
         if prerelease and datetime.now(timezone.utc) - timedelta(minutes=15) < prerelease.published_at:
             prerelease = None
