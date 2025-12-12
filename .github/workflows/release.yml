@@ -38,3 +38,4 @@ jobs:
         with:
           tag_name: v${{ steps.bump.outputs.current-version }}
           token: ${{ secrets.PAT }}  # Use personal access token for trigger next workflows
+          draft: true
