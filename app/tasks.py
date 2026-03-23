@@ -165,7 +165,14 @@ def poll_github_user():
                 db.session.commit()
 
             for repo_obj in chat.repos:
-                repo = github_obj.get_repo(repo_obj.id)
+                try:
+                    repo = github_obj.get_repo(repo_obj.id)
+                except github.GithubException as e:
+                    if e.status in (451,):
+                        message = f"GitHub repo {repo_obj.full_name} has been blocked"
+                    else:
+                        raise e
+                    continue
                 starred = repo in github_user.get_starred()
                 chat_repo = db.session.query(ChatRepo) \
                     .filter(ChatRepo.chat_id == chat.id).filter(ChatRepo.repo_id == repo_obj.id) \
