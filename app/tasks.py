@@ -170,9 +170,11 @@ def poll_github_user():
                 except github.GithubException as e:
                     if e.status in (451,):
                         message = f"GitHub repo {repo_obj.full_name} has been blocked"
+                        scheduler.app.logger.info(message)
                     else:
                         raise e
                     continue
+
                 starred = repo in github_user.get_starred()
                 chat_repo = db.session.query(ChatRepo) \
                     .filter(ChatRepo.chat_id == chat.id).filter(ChatRepo.repo_id == repo_obj.id) \
