@@ -821,6 +821,7 @@ class TelegramBot(object):
     async def run_webhook(self):
         await self.application.initialize()
         async with self.application.bot:
+            await self.application.start()
             await self.set_commands(self.application)
             await self.application.bot.set_webhook(url=f"{self.app.config['SITE_URL']}/telegram",
                                                    allowed_updates=Update.ALL_TYPES)
