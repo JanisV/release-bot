@@ -8,5 +8,5 @@ python-telegram-bot~=22.7
 PyGithub~=2.9.0
 requirements-parser~=0.11.0
 sulguk~=0.11.0
-telegramify_markdown~=1.1.1
+telegramify_markdown~=1.1.2
 urllib3~=2.6.3
