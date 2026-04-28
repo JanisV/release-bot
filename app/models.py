@@ -58,3 +58,20 @@ class Release(db.Model):
 
     repo_id = db.Column(db.ForeignKey('repo.id'))
     repos = db.relationship('Repo', back_populates='releases')
+
+
+class ReleaseNotification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'), index=True)
+    repo_id = db.Column(db.Integer, db.ForeignKey('repo.id'), index=True)
+    release_id = db.Column(db.Integer)
+    release_tag = db.Column(db.String)
+    release_title = db.Column(db.String)
+    release_url = db.Column(db.String)
+    release_body = db.Column(db.Text)
+    repo_full_name = db.Column(db.String)
+    repo_link = db.Column(db.String)
+    pre_release = db.Column(db.Boolean, default=False)
+    updated = db.Column(db.Boolean, default=False)
+    sent_at = db.Column(db.DateTime, default=aware_utcnow)
+    summarized_at = db.Column(db.DateTime)
