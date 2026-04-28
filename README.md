@@ -29,6 +29,7 @@ Other similar tools:
 - Ready for self-hosting, has docker image
 - Work locally, without white IP and domain name
 - Only Telegram token required
+- Daily summary of release notifications (optional)
 
 ## Commands
 
@@ -71,6 +72,10 @@ services:
       - TELEGRAM_BOT_TOKEN=<telegram_token>
       #- GITHUB_TOKEN=<github_token> # optional
       #- SITE_URL=https://<your_domain_name> # optional
+      #- DAILY_SUMMARY_TIME=21:00 # optional, HH:MM (24h)
+      #- DAILY_SUMMARY_TIMEZONE=Europe/Rome # optional
+      #- OPENROUTER_API_KEY=<openrouter_api_key> # optional
+      #- OPENROUTER_MODEL=openrouter/auto # optional
     ports:
       - 5000:5000
     volumes:
@@ -93,6 +98,18 @@ Look at Development section
 
 `SITE_URL` - (optional) URL used for listening for incoming requests from the Telegram servers. When not specified uses polling instead webhooks. More info at [Marvin's Marvellous Guide to All Things Webhook](https://core.telegram.org/bots/webhooks).
 
+`DAILY_SUMMARY_TIME` - (optional) Time to send a daily summary of release notifications, format HH:MM (24h). Default 21:00 (Europe/Rome).
+
+`DAILY_SUMMARY_TIMEZONE` - (optional) Timezone for `DAILY_SUMMARY_TIME` in IANA format, default Europe/Rome.
+
+`OPENROUTER_API_KEY` - (optional) OpenRouter API key for AI-generated daily summaries.
+
+`OPENROUTER_MODEL` - (optional) OpenRouter model name, default `openrouter/auto`.
+
+`OPENROUTER_APP_NAME` - (optional) OpenRouter app name header value.
+
+`OPENROUTER_SITE_URL` - (optional) OpenRouter referer header value.
+
 `CHAT_ID` - (optional) Only messages from the specified chat ID are accepted. Can be a comma separated list. You can get your chat ID with [@getmyid_bot](https://t.me/getmyid_bot). If not specified, all messages are accepted.
 
 `DATABASE_URI` - (optional) When not specified local SQLite uses.
@@ -100,6 +117,8 @@ Look at Development section
 `MAX_REPOS_PER_CHAT` - (optional) Limit number of repos per user. Default 0 - unlimited.
 
 `LOG_LEVEL` - (optional) Default INFO.
+
+If `OPENROUTER_API_KEY` is not set, daily summaries are skipped.
 
 ## Development
 

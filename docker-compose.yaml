@@ -1,0 +1,16 @@
+services:
+  release-bot:
+    container_name: release-bot
+    image: ghcr.io/janisv/release-bot:latest
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=<telegram_bot_token> # required
+      #- GITHUB_TOKEN=<github_token> # optional
+      #- SITE_URL=https://<your_domain_name> # optional
+      - OPENROUTER_API_KEY=sk-or-v1-xxx # required if you want use AI, get it from https://openrouter.ai/dashboard/api-keys
+      - OPENROUTER_MODEL=openrouter/free # optional, you can use any openrouter model, e.g. gpt-4o, gpt-4o-mini, etc.
+      - DAILY_SUMMARY_TIME=21:00 # optional, time for daily summary in 24h format, default is 20:00
+    ports:
+      - 5000:5000
+    volumes:
+      - ./data:/app/data
