@@ -1,0 +1,83 @@
+<b></b>
+ <a href=''></a>
+<blockquote># v1.136.0 - 69420 stars release
+
+> [!CAUTION]
+> # BREAKING CHANGES
+>
+> ## IMMICH_MEDIA_LOCATION (#19995)
+> Note: This is a **different** variable than `UPLOAD_LOCATION`, which requires no change.
+>
+> Note: if you **DO NOT** have `IMMICH_MEDIA_LOCATION` in your `.env` file, or if it is set to a path that starts with a `/` (absolute path), **THIS BREAKING CHANGE DOES NOT APPLY TO YOU.** Users of the all-in-one image (e.g., the unraid app) for instance are not affected.
+>
+> 
+> <hr>
+>
+> 
+> If you have a custom `IMMICH_MEDIA_LOCATION` environment variable set to a **relative path**, you will have to do the following process:
+>
+> 
+> 1. Stop Immich (`docker compose stop`):
+> 2. Update Immich (`docker compose pull`)
+> 3. Update the environment variable to an absolute path, for example:
+>
+> ```diff
+> -IMMICH_MEDIA_LOCATION=./my-library
+> +IMMICH_MEDIA_LOCATION=/usr/src/app/my-library
+> 
+> ```
+>
+> 
+> 4. Start Immich (`docker compose up -d --force-recreate`)
+> 5. After the server successfully starts up, connect to it (`docker exec ``*-it*`` immich_server /bin/sh`) and run  `immich-admin change-media-location`. When prompted, enter the appropriate values. For example:
+>
+> ```
+> docker exec -it immich_server /bin/sh
+> 
+> $ immich-admin change-media-location
+> ...
+> ? Enter the previous value of IMMICH_MEDIA_LOCATION: ./my-library
+> ? Enter the new value of IMMICH_MEDIA_LOCATION: /usr/src/app/my-library
+> 
+>   Previous value: ./my-library
+>   Current value:  /usr/src/app/my-library
+> 
+>   Changing database paths from "my-library/*" to "/usr/src/app/my-library/*"
+> 
+> ? Do you want to proceed? [Y/n] y
+> 
+> Matching database file paths were updated successfully! 🎉
+> 
+> You may now set IMMICH_MEDIA_LOCATION=/usr/src/app/my-library and restart!
+> 
+> ```
+>
+> 
+> ### Background/Motivation
+>
+> Relative paths have implied ambiguity, as they depend on the current working directory to resolve correctly, leading to issues like (#4465). This change removes this ambiguity and sets up the project to transition away from files living at `/usr/src/app/upload` entirely. Currently, the `upload` folder lives at `/usr/src/app/upload/upload`, which is *very* confusing… *for everyone*. This change opens to door for a future migration to something like `IMMICH_DATA=/data`, which a more sensible setup.
+>
+> 
+> ## API Key changes (#20113)
+>
+> Note: This change may affect the use of third-party applications, such as ImmichGo, ImmichKios, or ImmichFrame.
+>
+> This release includes a change to how API Keys work, specifically when used with routes that don’t require a specific permission. Previously, a scoped API Key could access these routes, but they will now throw a forbidden error. Routes without a declared scope now implicitly require the “all” permission.  
+
+
+# Highlights
+
+Welcome to release `v1.136.0`. This midsummer release is the culmination of the team's labor of love for the Immich community, featuring the introduction of a new timeline and sync mechanism in beta mode, Android widgets, and one of the last breaking changes we want to make before reaching the stable release milestone. Let’s dive right into it.
+
+* Beta mode for the new timeline, sync, and upload mechanism
+* Android widgets
+* iOS widget improvements
+* Deep links
+
+## Beta timeline, sync, and upload mechanism
+
+> [!NOTE]
+> This is only supported when both the server and the mobile app are updated to `v1.136.0`
+
+This is a series of work that has been happening for months under the hood, from the changes in the database query engine, server’s queries, and support logic, to integrating a whole new database on the mobile app, and rewriting almost all aspects of the mobile app, you can now try the new timeline with data sync mechanism, and upload rework by go to the `App
+-=SKIPPED=-</blockquote>

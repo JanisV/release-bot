@@ -1,0 +1,25 @@
+**LinuxServer Changes:**
+
+Rebase to Alpine 3.20.
+
+**Jackett Changes:**
+
+
+## Changes:
+
+* b6af0915a3fa59b840ec3630bddad8c621155b10 torrentsir: bump domain
+* 5bc33423e419c65e66356692c196ac6d13b859f7 assorted unit3d: -> 8..3.1
+* 55d8bc56f7ed603bb5e53406ec12a028df688f01 vault-network: fix cat
+* 0bfadbf7474d45ee66efcc95f4ed2563c9de771f add vault network a private site. resolves #15641
+* 8dce308646f6076b2763c979ec079adf26b26c9a losslessclub: private, invitation only.
+* 1d9016e3dd9c3fef1ea17b03971532e49a44fab8 ex-torrenty: change to cookie & UA login, add cat. resolves #15609
+* 53494afaf26517a7cdb0cc4a7e2b786720f92893 lossless: -> semi-private
+* 3ec68aa0bf4d8a267234d032607ff025e9e0b756 Revert "losslessclub: use login form. #15626"
+* bc6914b44b284ab285c603772150106e68f39c94 Revert "losslessclub: switch to cookie login. #15626"
+* 6c768e85e1dfa09b168b4f7ffc000b3108b3432c tjupd: update download selector
+<details><summary><b>See More</b></summary>
+
+* dbd28429a6e448410b44af88ac27ea376c9c7586 rudub: bump domain
+* 6442b1e0e3a5c449c578186a5d1ba9ab8dfe88c4 assorted nexus: bump engine tag
+
+This list of changes was [auto generated](https://dev.azure.com/Jackett/Jackett/_build/results?buildId=12746&view=logs).</details>

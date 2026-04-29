@@ -1,0 +1,3 @@
+————————
+
+See [CHANGES\.md](https://github.com/miguelgrinberg/flask-migrate/blob/main/CHANGES.md) for release notes\.

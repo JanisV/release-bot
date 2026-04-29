@@ -1,3 +1,4 @@
+import os
 from unittest.mock import Mock
 
 import pytest
@@ -54,6 +55,30 @@ def test_format_markdown_empty_input(empty_repo, empty_release):
 
     assert parse_mode == ParseMode.MARKDOWN_V2
     assert message == "————————\n"
+
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+
+def get_test_cases():
+    files = [f[:-5] for f in os.listdir(DATA_DIR) if f.endswith('.orig')]
+    return files
+
+@pytest.mark.parametrize("case_name", get_test_cases())
+def test_format_markdown_input(empty_repo, empty_release, case_name):
+    release_note_format = None
+
+    orig_path = os.path.join(DATA_DIR, f"{case_name}.orig")
+    dst_path = os.path.join(DATA_DIR, f"{case_name}.md")
+    with open(orig_path, 'r', encoding='utf-8', newline="\n") as f:
+        orig_content = f.read()
+    with open(dst_path, 'r', encoding='utf-8', newline="\n") as f:
+        dst_content = f.read()
+
+    empty_release.body = orig_content
+
+    message, parse_mode, entities = format_release_message(release_note_format, empty_repo, empty_release)
+
+    assert parse_mode == ParseMode.MARKDOWN_V2
+    assert message == dst_content
 
 if __name__ == '__main__':
     pytest.main([__file__])

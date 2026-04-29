@@ -1,0 +1,93 @@
+————————
+
+📌 __*v1\.117\.0*__
+
+**>*⚠️ Warning*
+>✏ __*Breaking changes*__
+>The `image` section of the config file structure for thumbnails and previews has changed\. If you use a config file and set the image settings to custom values, these will be ignored until updated to the new structure\.
+
+```diff
+…
+"image": {
+-  “previewFormat”: “jpeg”,
+-  “previewSize”: 1440,
+-  “quality”: 80,
+-  “thumbnailFormat”: “webp”,
+-  “thumbnailSize”: 250,
++  "thumbnail": {
++     "format": "webp",
++     "size": 250,
++     "quality": 80
++   },
++   "preview": {
++     "format": "jpeg",
++     "size": 1440,
++     "quality": 80
++   },
+    "colorspace": "p3",
+    "extractEmbedded": false
+  }
+…
+```
+
+✏ __*Highlights*__
+
+Welcome to release `v1.117.0` of Immich\. This release continues to bring bugfixes and additional enhancements to the app\. Let's go over some of the highlights below:
+
+⦁ Better folder checks
+⦁ Download notifications \(mobile\)
+⦁ Support and feedback links \(web\)
+⦁ Upgrade history
+⦁ Asset thumbnail improvements
+📚 *Better folder checks*
+This release fixes a few more issues with the `.immich` related checks\.
+⦁ Ignore errors when `.immich` already exists, but mount checks aren't enabled
+⦁ Add a docs page about [System Integrity](https://immich.app/docs/administration/system-integrity)
+⦁ Add an env option to skip mount checks \(`IMMICH_IGNORE_MOUNT_CHECK_ERRORS=true`\)
+📚 *Download notifications \(mobile\)*
+Downloads now show their progress and can be canceled
+
+🖼️https://github\.com/user\-attachments/assets/59e506be\-549d\-472c\-bcc5\-938f892dbe68
+
+📚 *Support and feedback links \(web\)*
+Links have been added to the Immich web application to help users more easily find our documentation, source code, discord, etc\. Also, third party packages have the option to additionally include their own links\.
+
+🖼[image](https://github.com/user-attachments/assets/b067b692-df64-466f-a838-67d25837175e)
+
+🖼[image](https://github.com/user-attachments/assets/1a9c5abe-529b-4cef-91f9-1470e1491dde)
+
+📚 *Upgrade history*
+Clicking on the server build number on the web will now also show upgrade history, in addition to other build information\.
+
+In the future we may look at combining this information with the new support/help modal\.
+
+🖼🖼```
+Light | Dark 
+------+------
+image | image
+```
+
+📚 *Asset thumbnail improvements*
+
+🔖 *Combined jobs*
+Thumbnails are critical to keep Immich feeling snappy\. We currently generate a "preview" \(large\), a "thumbnail" \(small\), and a "thumbhash" \(very small\) for each asset\. Prior to this release each version for each asset was a separate job\. Now they have been combined into a single job, per asset\. This makes the jobs page much more accurate and useful\. It also means thumbnails generate faster, and use less system resources \(see below\)\.
+
+🖼[thumbnail\-generation\-memory\-usage](https://github.com/user-attachments/assets/b31850c5-c283-4a87-b4c0-28b05867b7f4)
+
+In order from left to right:
+⦁ Previews generation start on old version
+⦁ Previews generation completed old version \(starting thumbnails\)
+⦁ Thumbnail generation finished old version
+⦁ Thumbnail generation started on new version
+⦁ Thumbnail generation finished on new version
+🔖 *Common settings*
+Previews and thumbnails can now _both_ set desired `format`, `resolution`, and `quality` settings\.
+
+🖼[image\-settings](https://github.com/user-attachments/assets/589648c7-6687-411e-8a9e-f1e0a0515a88)
+
+✏ __*Support Immich*__
+
+🖼️https://media\.giphy\.com/media/v1\.Y2lkPTc5MGI3NjExbjY2eWc5Y2F0ZW56MmR4aWE0dDhzZXlidXRmYWZyajl1bWZidXZpcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/87CKDqErVfMqY/giphy\.gif
+
+If you find the project helpful, you can
+\-\=SKIPPED\=\-

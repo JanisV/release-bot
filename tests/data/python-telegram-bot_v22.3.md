@@ -1,0 +1,7 @@
+————————
+
+*We've just released v22\.3*\.
+Thank you to everyone who contributed to this release\.
+As usual, upgrade using `pip install -U python-telegram-bot`\.
+
+The release notes can be found [here](https://docs.python-telegram-bot.org/en/v22.3/changelog.html)\.

@@ -1,0 +1,68 @@
+————————
+
+📌 __*NumPy 2\.3\.2 Release Notes*__
+
+The NumPy 2\.3\.2 release is a patch release with a number of bug fixes
+and maintenance updates\. The highlights are:
+
+⦁ Wheels for Python 3\.14\.0rc1
+⦁ PyPy updated to the latest stable release
+⦁ OpenBLAS updated to 0\.3\.30
+This release supports Python versions 3\.11\-3\.14
+
+✏ __*Contributors*__
+
+A total of 9 people contributed to this release\. People with a "\+" by
+their names contributed a patch for the first time\.
+
+⦁ \!DWesl
+⦁ Charles Harris
+⦁ Joren Hammudoglu
+⦁ Maanas Arora
+⦁ Marco Edward Gorelli
+⦁ Matti Picus
+⦁ Nathan Goldbaum
+⦁ Sebastian Berg
+⦁ kostayScr \+
+✏ __*Pull requests merged*__
+
+A total of 16 pull requests were merged for this release\.
+
+⦁ [\#29256](https://github.com/numpy/numpy/pull/29256): MAINT: Prepare 2\.3\.x for further development
+⦁ [\#29283](https://github.com/numpy/numpy/pull/29283): TYP: Work around a mypy issue with bool arrays \(\#29248\)
+⦁ [\#29284](https://github.com/numpy/numpy/pull/29284): BUG: fix fencepost error in StringDType internals
+⦁ [\#29287](https://github.com/numpy/numpy/pull/29287): BUG: handle case in mapiter where descriptors might get replaced\.\.\.
+⦁ [\#29350](https://github.com/numpy/numpy/pull/29350): BUG: Fix shape error path in array\-interface
+⦁ [\#29412](https://github.com/numpy/numpy/pull/29412): BUG: Allow reading non\-npy files in npz and add test
+⦁ [\#29413](https://github.com/numpy/numpy/pull/29413): TST: Avoid uninitialized values in test \(\#29341\)
+⦁ [\#29414](https://github.com/numpy/numpy/pull/29414): BUG: Fix reference leakage for output arrays in reduction functions
+⦁ [\#29415](https://github.com/numpy/numpy/pull/29415): BUG: fix casting issue in center, ljust, rjust, and zfill \(\#29369\)
+⦁ [\#29416](https://github.com/numpy/numpy/pull/29416): TYP: Fix overloads in `np.char.array` and `np.char.asarray`\.\.\.
+⦁ [\#29417](https://github.com/numpy/numpy/pull/29417): BUG: Any dtype should call `square` on `arr \\*\\* 2` \(\#29392\)
+⦁ [\#29424](https://github.com/numpy/numpy/pull/29424): MAINT: use a stable pypy release in CI
+⦁ [\#29425](https://github.com/numpy/numpy/pull/29425): MAINT: Support python 314rc1
+⦁ [\#29429](https://github.com/numpy/numpy/pull/29429): MAINT: Update highway to match main\.
+⦁ [\#29430](https://github.com/numpy/numpy/pull/29430): BLD: use github to build macos\-arm64 wheels with OpenBLAS and\.\.\.
+⦁ [\#29437](https://github.com/numpy/numpy/pull/29437): BUG: fix datetime/timedelta hash memory leak \(\#29411\)
+✏ __*Checksums*__
+
+📚 *MD5*
+
+```
+e35c637ea9fba77eabfdf70e26eaa16d  numpy-2.3.2-cp311-cp311-macosx_10_9_x86_64.whl
+3dede42d11c843cfacff422f65a80e47  numpy-2.3.2-cp311-cp311-macosx_11_0_arm64.whl
+f5c485a43210eb3541b254c8c9d6ac9e  numpy-2.3.2-cp311-cp311-macosx_14_0_arm64.whl
+658950eb37e19b42920635ee60830a1d  numpy-2.3.2-cp311-cp311-macosx_14_0_x86_64.whl
+9a864a280798829cc522521bc5d9c7e2  numpy-2.3.2-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
+085e1ff7746d327a1320672ab86966c3  numpy-2.3.2-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+6acefa06c38bc616352b76174d4f19d2  numpy-2.3.2-cp311-cp311-musllinux_1_2_aarch64.whl
+4dd3469970dbfba60dad41b9923c5a5a  numpy-2.3.2-cp311-cp311-musllinux_1_2_x86_64.whl
+ad090139b8b872a9157b92c840566c5e  numpy-2.3.2-cp311-cp311-win32.whl
+09b023f808432e60633e36a13630dc13  numpy-2.3.2-cp311-cp311-win_amd64.whl
+c80f2a1c4c829ccb6745a6d0803b7177  numpy-2.3.2-cp311-cp311-win_arm64.whl
+307fc28e0c630dbc5a6ff4051ee9ec6c  numpy-2.3.2-cp312-cp312-macosx_10_13_x86_64.whl
+4af1ffb81bdec235aef1b9bdf7c1566d  numpy-2.3.2-cp312-cp312-macosx_11_0_arm64.whl
+8003e8df1badaffee163a603bf05656b  numpy-2.3.2-cp312-cp312-macosx_14_0_arm64.whl
+e703fab1c371fd27389401caa34a5cbd  numpy-2.3.2-cp312-cp312-macosx_14_0_x86_6
+```
+\-\=SKIPPED\=\-
