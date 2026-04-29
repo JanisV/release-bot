@@ -38,6 +38,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: pytest
+
       - name: Bump commit version
         if: github.event_name == 'push'
         shell: bash
