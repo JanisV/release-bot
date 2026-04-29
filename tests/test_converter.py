@@ -53,7 +53,7 @@ def test_format_markdown_empty_input(empty_repo, empty_release):
     message, parse_mode, entities = format_release_message(release_note_format, empty_repo, empty_release)
 
     assert parse_mode == ParseMode.MARKDOWN_V2
-    assert message == "————————\n[]()\n\n"
+    assert message == "————————\n"
 
 if __name__ == '__main__':
     pytest.main([__file__])
