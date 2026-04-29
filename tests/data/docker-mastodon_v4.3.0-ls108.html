@@ -49,5 +49,5 @@ The API is not final yet, but it consists of:
   ⦁ `GET /api/v2/notifications`: https://docs\.joinmastodon\.org/methods/grouped\_notifications/\#get\-grouped
   ⦁ `GET /api/v2/notifications/:group_key`: https://docs\.joinmastodon\.org/methods/grouped\_notifications/\#get\-notification\-group
   ⦁ `GET /api/v2/notifications/:group_key/accounts`: https://docs\.joinmastodon\.org/methods/grouped\_notifications/\#get\-group\-accounts
-  ⦁ \`POST /api/v2/notifications/:group\_ke
+  ⦁ `POST /api/v2/notifications/:group_key/dimsiss`: https://docs\.joinmastodon\.org/meth
 \-\=SKIPPED\=\-

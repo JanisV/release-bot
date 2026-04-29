@@ -63,5 +63,6 @@ Related Discussion: https://github.com/sqlitebrowser/sqlitebrowser/discussions/3
 ### Dependent library version information for each OS
 | **-**              | [**Qt**](https://www.qt.io/)                                         | [**SQLCipher**](https://www.zetetic.net/sqlcipher/)                       | [**SQLite**](https://sqlite.org/)                       | [**SQLean**](https://github.com/nalgeon/sqlean)                 |
 |--------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------------------|
-| **AppImage**       | [5.12.8](https://www.qt.io/blog/qt-5.12.8-released)                  | [4.6.1](https://www.zetetic.net/blog/2024/08/20/sqlcipher-4.6.1-release/) | Not applicable                                          | Not app
+| **AppImage**       | [5.12.8](https://www.qt.io/blog/qt-5.12.8-released)                  | [4.6.1](https://www.zetetic.net/blog/2024/08/20/sqlcipher-4.6.1-release/) | Not applicable                                          | Not applicable                                                  |
+| **
 -=SKIPPED=-</blockquote>

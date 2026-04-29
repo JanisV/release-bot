@@ -35,5 +35,7 @@ We also now have a public roadmap which you can check for the features that we'r
 ⦁ You can now trigger AI tag regeneration for all bookmarks or the ones that that failed only in the admin panel\.
 ⦁ When you hoard text from other webpages by the extension \(by highlighting text \-\> right click \-\> add to hoarder\) the source link will now be preserved with the text\.
 ⦁ We have a new tabbed user settings page as it was getting quite long\.
-⦁ Sidebar items were not clickable around the boarder which was annoying\. @Trugamr fixed
+⦁ Sidebar items were not clickable around the boarder which was annoying\. @Trugamr fixed that\!
+📌 __*Fixes*__
+⦁ For those who want
 \-\=SKIPPED\=\-

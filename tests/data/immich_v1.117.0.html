@@ -89,5 +89,5 @@ Previews and thumbnails can now _both_ set desired `format`, `resolution`, and `
 
 🖼️https://media\.giphy\.com/media/v1\.Y2lkPTc5MGI3NjExbjY2eWc5Y2F0ZW56MmR4aWE0dDhzZXlidXRmYWZyajl1bWZidXZpcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/87CKDqErVfMqY/giphy\.gif
 
-If you find the project helpful, you can
+If you find the project helpful, you can support Immich by purchasing a product key at [https://buy\.immich\.app](https://buy.immich.app)\.
 \-\=SKIPPED\=\-

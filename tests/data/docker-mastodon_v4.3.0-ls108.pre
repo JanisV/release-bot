@@ -52,5 +52,5 @@ The following changelog entries focus on changes visible to users, administrator
   - `GET /api/v2/notifications`: https://docs.joinmastodon.org/methods/grouped_notifications/#get-grouped
   - `GET /api/v2/notifications/:group_key`: https://docs.joinmastodon.org/methods/grouped_notifications/#get-notification-group
   - `GET /api/v2/notifications/:group_key/accounts`: https://docs.joinmastodon.org/methods/grouped_notifications/#get-group-accounts
-  - `POST /api/v2/notifications/:group_ke
+  - `POST /api/v2/notifications/:group_key/dimsiss`: https://docs.joinmastodon.org/meth
 -=SKIPPED=-</pre>

@@ -61,5 +61,6 @@ To upgrade:
 📌 __*All Commits*__
 
 ⦁ i18n: fix en\_US translation \- @MohamedBassem in f01d96fd
-⦁ i18n: Sync weblate translations \- @Hosted Web
+⦁ i18n: Sync weblate translations \- @Hosted Weblate in e1ad2cfd
+⦁ feat: autocomplete search terms \(\#2178\) \- @MohamedBa
 \-\=SKIPPED\=\-

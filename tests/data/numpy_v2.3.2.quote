@@ -65,5 +65,6 @@ A total of 16 pull requests were merged for this release.
     307fc28e0c630dbc5a6ff4051ee9ec6c  numpy-2.3.2-cp312-cp312-macosx_10_13_x86_64.whl
     4af1ffb81bdec235aef1b9bdf7c1566d  numpy-2.3.2-cp312-cp312-macosx_11_0_arm64.whl
     8003e8df1badaffee163a603bf05656b  numpy-2.3.2-cp312-cp312-macosx_14_0_arm64.whl
-    e703fab1c371fd27389401caa34a5cbd  numpy-2.3.2-cp312-cp312-macosx_14_0_x86_6
+    e703fab1c371fd27389401caa34a5cbd  numpy-2.3.2-cp312-cp312-macosx_14_0_x86_64.whl
+    5fdc228f15ec5de78b89c7aa4c137019  numpy-2.3.2-cp312-cp3
 -=SKIPPED=-</blockquote>

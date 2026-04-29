@@ -2,7 +2,6 @@
 
 import os
 import urllib
-from unittest.mock import Mock
 
 from app import github_obj
 from app.repo_engine import format_release_message
@@ -63,20 +62,20 @@ if __name__ == '__main__':
         pre_path = os.path.join(DATA_DIR, f"{case_name}.pre")
         quote_path = os.path.join(DATA_DIR, f"{case_name}.quote")
 
-        with open(orig_path, 'w', encoding='utf-8', newline="\n") as f:
+        with open(orig_path, 'w', encoding='utf-8', newline="") as f:
             f.write(release.body)
 
         empty_repo = DummyRepo()
         empty_release = DummyRelease(release.body)
-        with open(md_path, 'w', encoding='utf-8', newline="\n") as f:
+        with open(md_path, 'w', encoding='utf-8', newline="") as f:
             message, parse_mode, entities = format_release_message(None, empty_repo, empty_release)
             f.write(message)
-        with open(html_path, 'w', encoding='utf-8', newline="\n") as f:
+        with open(html_path, 'w', encoding='utf-8', newline="") as f:
             message, parse_mode, entities = format_release_message("html", empty_repo, empty_release)
             f.write(message)
-        with open(pre_path, 'w', encoding='utf-8', newline="\n") as f:
+        with open(pre_path, 'w', encoding='utf-8', newline="") as f:
             message, parse_mode, entities = format_release_message("pre", empty_repo, empty_release)
             f.write(message)
-        with open(quote_path, 'w', encoding='utf-8', newline="\n") as f:
+        with open(quote_path, 'w', encoding='utf-8', newline="") as f:
             message, parse_mode, entities = format_release_message("quote", empty_repo, empty_release)
             f.write(message)

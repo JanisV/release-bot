@@ -107,5 +107,6 @@ Vertical scrollbar breaks after pasting text \(\#296\)
 ⦁ Fix syntax warning in `GetTranslationsStatus.py` by @gerundt in https://github\.com/WinMerge/winmerge/pull/2751
 ⦁ Update French\.po by @slolo2000 in https://github\.com/WinMerge/winmerge/pull/2754
 ⦁ Update Russian\.po by @Timon34 in https://github\.com/WinMerge/winmerge/pull/2760
-⦁ Update French\.po by @slolo2000
+⦁ Update French\.po by @slolo2000 in https://github\.com/WinMerge/winmerge/pull/2761
+⦁ Update French\.po by @slolo2000 in https://github\.com/WinMerge/winmerge/p
 \-\=SKIPPED\=\-

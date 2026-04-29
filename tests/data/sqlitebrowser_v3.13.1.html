@@ -55,8 +55,9 @@ Related Discussion: https://github\.com/sqlitebrowser/sqlitebrowser/discussions/
     ⦁ Spanish \(ac33918\)
 📚 *Dependent library version information for each OS*
 ```
--           | Qt     | SQLCipher | SQLite         | SQLean 
-------------+--------+-----------+----------------+--------
-AppImage    | 5.12.8 | 4.6.1     | Not applicable | Not app
--=SKIPPED=- |        |           |                |        
+-           | Qt     | SQLCipher | SQLite         | SQLean        
+------------+--------+-----------+----------------+---------------
+AppImage    | 5.12.8 | 4.6.1     | Not applicable | Not applicable
+**          |        |           |                |               
+-=SKIPPED=- |        |           |                |               
 ```

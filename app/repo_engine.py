@@ -66,7 +66,9 @@ def format_header(release_note_format, repo, release):
 
 def htmlify_release_body(release_note_format, repo, release):
     header = format_header(release_note_format, repo, release)
-    release_body = f"{header}{release.body}"
+    release_body = release.body
+    release_body = release_body.replace('\r\n', '\n')
+    release_body = f"{header}{release_body}"
 
     rendered_release_body = github_obj.render_markdown(release_body)
     try:
@@ -101,6 +103,7 @@ def htmlify_release_body(release_note_format, repo, release):
 
 def codeify_release_message(release_note_format, repo, release):
     release_body = release.body
+    release_body = release_body.replace('\r\n', '\n')
     release_body = github_extra_html_tags_pattern.sub(
         "",
         release_body
@@ -125,6 +128,7 @@ def markdownify_release_message(release_note_format, repo, release):
     release_body = release.body
     if release_body is None:
         release_body = "None"
+    release_body = release_body.replace('\r\n', '\n')
     release_body = github_extra_html_tags_pattern.sub(
         "",
         release_body
