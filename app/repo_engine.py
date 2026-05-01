@@ -69,6 +69,8 @@ def htmlify_release_body(release_note_format, repo, release):
     release_body = release.body
     if release_body:
         release_body = release_body.replace('\r\n', '\n')
+    else:
+        release_body = ""
     release_body = f"{header}{release_body}"
 
     rendered_release_body = github_obj.render_markdown(release_body)
@@ -106,6 +108,8 @@ def codeify_release_message(release_note_format, repo, release):
     release_body = release.body
     if release_body:
         release_body = release_body.replace('\r\n', '\n')
+    else:
+        release_body = ""
     release_body = github_extra_html_tags_pattern.sub(
         "",
         release_body

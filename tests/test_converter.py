@@ -31,6 +31,42 @@ def empty_release():
     release.updated = False
     return release
 
+def test_format_quote_none_input(empty_repo, empty_release):
+    release_note_format = FORMATTING_PARAMS["quote"]["format"]
+
+    empty_release.body = None
+    message, parse_mode, entities = format_release_message(release_note_format, empty_repo, empty_release)
+
+    assert parse_mode == FORMATTING_PARAMS["quote"]["mode"]
+    assert message == "<b></b>\n <a href=''></a>\n<blockquote></blockquote>"
+
+def test_format_pre_none_input(empty_repo, empty_release):
+    release_note_format = FORMATTING_PARAMS["pre"]["format"]
+
+    empty_release.body = None
+    message, parse_mode, entities = format_release_message(release_note_format, empty_repo, empty_release)
+
+    assert parse_mode == FORMATTING_PARAMS["pre"]["mode"]
+    assert message == "<b></b>\n <a href=''></a>\n<pre></pre>"
+
+def test_format_html_none_input(empty_repo, empty_release):
+    release_note_format = FORMATTING_PARAMS["html"]["format"]
+
+    empty_release.body = None
+    message, parse_mode, entities = format_release_message(release_note_format, empty_repo, empty_release)
+
+    assert parse_mode == FORMATTING_PARAMS["html"]["mode"]
+    assert message == "****\n\n"
+
+def test_format_markdown_none_input(empty_repo, empty_release):
+    release_note_format = FORMATTING_PARAMS["markdown"]["format"]
+
+    empty_release.body = None
+    message, parse_mode, entities = format_release_message(release_note_format, empty_repo, empty_release)
+
+    assert parse_mode == FORMATTING_PARAMS["markdown"]["mode"]
+    assert message == "————————\n"
+
 def test_format_quote_empty_input(empty_repo, empty_release):
     release_note_format = FORMATTING_PARAMS["quote"]["format"]
 
