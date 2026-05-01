@@ -13,6 +13,7 @@ class Config:
     LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO').upper()
     MAX_REPOS_PER_CHAT = int(os.environ.get('MAX_REPOS_PER_CHAT', 0))
     PROCESS_PRE_RELEASES = bool(GITHUB_TOKEN)
+    GITHUB_POLL_INTERVAL = int(os.environ.get('GITHUB_POLL_INTERVAL', 60))
     CHAT_ID = []
     if 'CHAT_ID' in os.environ:
         for chat_id in os.environ.get('CHAT_ID').split(','):

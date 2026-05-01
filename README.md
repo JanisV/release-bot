@@ -101,6 +101,8 @@ Look at Development section
 
 `LOG_LEVEL` - (optional) Default INFO.
 
+`GITHUB_POLL_INTERVAL` - (optional) How often to poll GitHub, minutes. Default 60.
+
 ## Development
 
 Setup env vars and run:

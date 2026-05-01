@@ -7,13 +7,13 @@ from github.Tag import Tag
 from telegram import LinkPreviewOptions
 from telegram.constants import ParseMode
 
-from app import models
+from app import app, models
 from app import github_obj, db, telegram_bot, scheduler
 from app.models import ChatRepo
 from app.repo_engine import store_latest_release, format_release_message
 
 
-@scheduler.task('cron', id='poll_github', hour='*')
+@scheduler.task('interval', id='poll_github', minutes=app.config['GITHUB_POLL_INTERVAL'])
 def poll_github():
     with scheduler.app.app_context():
         for repo_obj in models.Repo.query.all():
