@@ -16,6 +16,10 @@ from app.repo_engine import store_latest_release, format_release_message
 @scheduler.task('interval', id='poll_github', minutes=app.config['GITHUB_POLL_INTERVAL'])
 def poll_github():
     with scheduler.app.app_context():
+        if not asyncio.run(telegram_bot.test_token()):
+            app.logger.fatal('Telegram bot token is invalid or server not available')
+            return
+
         for repo_obj in models.Repo.query.all():
             # TODO: Filter blocked repos from SQL query
             if repo_obj.blocked:

@@ -811,7 +811,7 @@ class TelegramBot(object):
         try:
             async with self.application.bot:
                 return True
-        except telegram.error.InvalidToken:
+        except (telegram.error.InvalidToken, telegram.error.TimedOut):
             return False
 
     async def webhook(self, data):
